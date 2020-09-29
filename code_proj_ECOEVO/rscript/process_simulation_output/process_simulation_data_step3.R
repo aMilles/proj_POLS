@@ -6,7 +6,7 @@ library(ggthemes)
 # if simulation path is not yet defined via the process_simulation_data_all_steps.R script, define it here
 if(any(!paste0("L", seq(3)) %in% ls())){
   L1 <- "simulations"
-  L2 <- "2020-07-25"
+  L2 <- "2020-08-20"
   L3 <- "Main_predictions"
 }
 
@@ -66,3 +66,4 @@ if(file.exists(agg.path_alt)){
   dir.create(dirname(stacked.file))
   data.table::fwrite(stacked_agg_alt, file = stacked.file)
 }
+

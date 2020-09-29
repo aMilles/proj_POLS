@@ -12,7 +12,7 @@ n_cores <- 2 #NUMBER OF CORES TO USE FOR PARALLEL PROCESSING OF SIMULATION DATA
 
 ### CONVERT SIMULATION DATA TO A DATA FRAME FORMAT
 
-source(here("code_proj_ECOEVO", "rscript", "process_simulation_data_step1.R"))
+source(here("code_proj_ECOEVO", "rscript", "process_simulation_output", "process_simulation_data_step1.R"))
 
 ### CLEANUP
 rm(list = ls()[!ls() %in% c(paste0("L", seq(3)),"n_cores", "sim.date")])
@@ -23,7 +23,7 @@ rm(list = ls()[!ls() %in% c(paste0("L", seq(3)),"n_cores", "sim.date")])
 
 ### AGGREGATE INDIVIDUAL DATA BY SUBPOPULATIONS WHICH ARE DEFINED BY THE THE DECILES OF POPULATION DENSITY
 
-source(here("code_proj_ECOEVO", "rscript", "process_simulation_data_step2.R"))
+source(here("code_proj_ECOEVO", "rscript", "process_simulation_output", "process_simulation_data_step2.R"))
 
 ### CLEANUP
 rm(list = ls()[!ls() %in% c(paste0("L", seq(3)),"n_cores", "sim.date")])
@@ -33,7 +33,7 @@ rm(list = ls()[!ls() %in% c(paste0("L", seq(3)),"n_cores", "sim.date")])
 ##############
 
 ### COMBINE AGGREGATED DATA FROM SINGLE SIMULATION RUNS TO A SINGLE DATASET 
-source(here("code_proj_ECOEVO", "rscript", "process_simulation_data_step3.R"))
+source(here("code_proj_ECOEVO", "rscript", "process_simulation_output", "process_simulation_data_step3.R"))
 
 ### CLEANUP
 rm(list = ls()[!ls() %in% c(paste0("L", seq(3)),"n_cores", "sim.date")])

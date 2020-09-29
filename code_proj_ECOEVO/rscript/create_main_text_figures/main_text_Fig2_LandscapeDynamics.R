@@ -92,7 +92,7 @@ landscape_proc <- landscape_proc[, -match(c("x", "y", "hr"), names(landscape_pro
     geom_ribbon(aes(ymin = lhr, ymax = uhr), fill = "gray90")+
     geom_line(aes(y = mhr))+
     theme_clean()+ 
-    ylab("Harvest rate")+
+    ylab("Median harvest rate [n/t]")+
     xlab("Time")+
     scale_x_continuous(breaks = c(10000, 15000), limits = c(5000, 20000))+
     scale_y_continuous(breaks = c(0.5, 1.5, 2.5), limits = c(0, 3.5))+
@@ -117,18 +117,13 @@ exmp_data_animal <- data.frame(read_csv(exmp_file), ID = substr(basename(exmp_fi
 df.density_no_disturbance <- exmp_data_animal %>%
   filter(!duplicated(who)) %>% 
   filter(!duplicated(ticks))
-
 df.density_no_disturbance <- 
   df.density_no_disturbance %>% 
   filter(ticks > 5000) %>% 
   mutate(coef_var_tot = coef_var(ninds))
 
 # calculate deciles for plot
-ys <- c(min(Fig2A_data$Population.density), quantile(Fig2A_data$`Population.density`, seq(0.1, .9, length.out = 9)), max(Fig2A_data$Population.density))
-
-
-coef_var(Fig2A_data$Population.density)
-
+ys <- c(min(Fig2A_data$Population.density), reldist::wtd.quantile(Fig2A_data$`Population.density`, seq(0.1, .9, length.out = 9),weight =  round(Fig2A_data$Population.density * 62500)), max(Fig2A_data$Population.density))
 
 # plot fluctuation in population density with grey-white stripes as deciles, indicate time of lowest and highest harvest rate with vertical dashed lines
 (Fig2B <-

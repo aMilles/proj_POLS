@@ -33,25 +33,25 @@ stacked_sub <- stacked %>%
 
 # Stylizied intitial distribution of traits
 
-Fig3A_data <- data.frame(y = runif(400), x = runif(400, max = 2))
+Fig3A_data <- data.frame(x = runif(400), y = runif(400, max = 2))
 
 (Fig3A <- ggplot()+  
     geom_point(data = Fig3A_data, aes(x = x, y = y), shape = 21, size = .5)+
-    xlab("Responsiveness (2 - BT)")+
-    ylab("Relative investment\nto reproduction (LH)")+
-    geom_rect(data = stacked %>%  filter(growth_type == "logistic"), aes(xmin = min(medianBT), xmax = max(medianBT), ymin = min(medianLH), ymax = max(medianLH)), fill = NA, color = "gray50", size = 2)+
+    ylab("Responsiveness (BT)")+
+    xlab("Relative investment\nto reproduction (LH)")+
+    geom_rect(data = stacked %>%  filter(growth_type == "logistic"), aes(ymax = 2- min(medianBT), ymin = 2 - max(medianBT), xmin = min(medianLH), xmax = max(medianLH)), fill = NA, color = "gray50", size = 2)+
     theme_clean()+
-    scale_x_continuous(breaks = c(0, 1, 2), labels = c("0 (low)", 1, "2 (high)"))+
-    scale_y_continuous(breaks = c(0, .5, 1), labels = c("0 (low)", .5, "1 (high)"))+
+    scale_x_continuous(breaks = c(0, .5, 1), labels = c("0 (low)", .5, "1 (high)"))+
+    scale_y_continuous(breaks = c(0, 1, 2), labels = c("0 (low)", 1, "2 (high)"))+
   theme(text = element_text(size = 8), plot.background = element_rect(fill = NA, color = NA), panel.grid.major = element_blank()))
 
 # create figure with traits on y and x and generation time as color scale wiith aggregated (not subsetted)
-(Fig3B <- ggplot(stacked %>% filter(growth_type == "logistic"), aes(x = medianBT, y = medianLH))+
+(Fig3B <- ggplot(stacked %>% filter(growth_type == "logistic"), aes(y = 2 - medianBT, x = medianLH))+
     geom_point(aes(fill = log10(generation_time)),  alpha = 1, shape = 21, color = "white")+
     geom_smooth(method = "lm", se = F, formula = y ~ poly(x,2), color = "black", size = 1, linetype = "dashed")+
     scale_fill_viridis_c("Generation time\n(log 10)", breaks = c(2, 3), labels = c("2 (fast)", "3 (slow)"))+
-    xlab("Responsiveness (2 - BT)")+
-    ylab("Relative investment\nto reproduction (LH)")+
+    ylab("Responsiveness (BT)")+
+    xlab("Relative investment\nto reproduction (LH)")+
     theme_clean()+
     theme(legend.position = "bottom", text = element_text(size = 8), legend.title = element_text(size = 8), legend.text = element_text(size = 8), legend.key.height = unit(4, "mm"), plot.background = element_rect(fill = NA, color = NA)))
 
@@ -66,10 +66,10 @@ Fig3 <-
 
 
 # save figure 3
-ggsave(here::here("figs", sim.date, "main_text", paste0("Fig3", ".png")), Fig3, width = 8, height = 13.5, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "main_text", paste0("Fig3", ".png")), Fig3, width = 8, height = 14.5, units = "cm", dpi = 600)
 
 
-####################
+<####################
 #### FIGURE 4 ######
 ####################
 
@@ -78,7 +78,7 @@ Fig4_data <- stacked_sub %>%  filter(growth_type == "logistic")
 
 # FIG 4 A: distribution of life history trait and behavioural trait under different densities and coefficients of variation
 (p1_plot_BRN_paper <- 
-    ggplot(Fig4_data, aes(x = medianBT, y = medianLH))+
+    ggplot(Fig4_data, aes(y = medianBT, x = medianLH))+
     geom_line(aes(group = tot_coefvar, color = tot_coefvar),  alpha = 1)+
     geom_point(aes(color = tot_coefvar, shape = pop_group),  alpha = 1, size = 2)+
     scale_color_viridis_c("Coefficient of variation", values = c(0, 0.1, 0.3, 1))+
@@ -86,13 +86,13 @@ Fig4_data <- stacked_sub %>%  filter(growth_type == "logistic")
     theme_clean()+
     scale_size_continuous(range = c(.5,5))+
     theme(legend.position = "bottom", text = element_text(size = 8), legend.title = element_text(size = 8), legend.text = element_text(size = 8), legend.key.height = unit(4, "mm"))+
-    xlab("Responsiveness (2-BT)")+
-    ylab("Relative investment\nto reproduction (LH)")+
+    ylab("Responsiveness (BT)")+
+  xlab("Relative investment\nto reproduction (LH)")+
     guides(size = guide_legend(title = "Population\nDensity")))
 
 # Fig 4 B: Distribution of movement behaviour and investment to reproduction
 (p1_plot_phenotypic_behaviour_paper <- 
-    ggplot(Fig4_data, aes(x = median_movement_activity, y = median_repo_activity))+
+    ggplot(Fig4_data, aes(y = median_movement_activity, x = median_repo_activity))+
     geom_line(aes(group = tot_coefvar, color = tot_coefvar),  alpha = 1)+
     geom_point(aes(color = tot_coefvar, shape = pop_group),  alpha = 1, size = 2)+
     scale_color_viridis_c("Coefficient of\nvariation", breaks = c(round(min(Fig4_data$tot_coefvar), 1) + 0.2, round(max(Fig4_data$tot_coefvar), 1) - 0.2), labels = c(paste0(round(min(Fig4_data$tot_coefvar), 1) + 0.2, " (stabile)"), paste0(round(max(Fig4_data$tot_coefvar), 1), " (labile)")), values = c(0, 0.1, 0.3, 1))+
@@ -100,8 +100,8 @@ Fig4_data <- stacked_sub %>%  filter(growth_type == "logistic")
     theme_clean()+
     scale_size_continuous(range = c(.5,5), breaks = c(0.05, 0.15, 0.25))+
     theme(legend.position = "right", text = element_text(size = 8), legend.title = element_text(size = 8), legend.text = element_text(size = 8), legend.box = "vertical", legend.key.height = unit(4, "mm"))+
-    xlab("Movement rate")+
-    ylab("Rate of investment to reproduction")+
+    ylab("Movement rate")+
+    xlab("Rate of investment\nto reproduction")+
     guides(size = guide_legend(title = "Population\nDensity")))
 
 

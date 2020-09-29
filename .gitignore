@@ -3,3 +3,4 @@ simulations/2020*
 figs/2020*
 table/suppl*
 *.db
+.Rproj.user

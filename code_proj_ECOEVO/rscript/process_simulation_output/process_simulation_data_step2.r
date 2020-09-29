@@ -7,7 +7,7 @@ library(tibble)
 # if simulation path is not yet defined via the process_simulation_data_all_steps.R script, define it here
 if(any(!paste0("L", seq(3)) %in% ls())){
   L1 <- "simulations"
-  L2 <- "2020-08-13"
+  L2 <- "2020-08-20"
   L3 <- "Main_predictions"
 }
 
@@ -176,21 +176,26 @@ process_sim_step2 <-
         mutate(median_movement_activity = median(movement_activity)) %>% 
         mutate(upper_movement_activity = quantile(movement_activity, 0.75)) %>%
         mutate(lower_movement_activity = quantile(movement_activity, 0.25)) %>%
+        mutate(sd_movement_activity = sd(movement_activity)) %>% 
+        
         
         # investment to reproduction distribution
         mutate(median_repo_activity = median(repo_activity)) %>%
         mutate(upper_repo_activity = quantile(repo_activity, 0.75)) %>%
         mutate(lower_repo_activity = quantile(repo_activity, 0.25)) %>%
+        mutate(sd_repo_activity = sd(repo_activity)) %>% 
         
         # behavioural trait distribution
         mutate(medianBT = median(BT)) %>%
         mutate(upperBT = quantile(BT, 0.75)) %>%
         mutate(lowerBT = quantile(BT, 0.25)) %>%
+        mutate(sdBT = sd(BT)) %>% 
         
         # life history trait distribution
         mutate(medianLH = median(LH)) %>%
         mutate(upperLH = quantile(LH, 0.75)) %>%
         mutate(lowerLH = quantile(LH, 0.25)) %>%
+        mutate(sdLH = sd(LH)) %>% 
         
         # retain one data point per aggregation 
         filter(!duplicated(pop_group))
