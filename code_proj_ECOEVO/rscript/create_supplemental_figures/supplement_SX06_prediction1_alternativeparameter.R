@@ -14,8 +14,8 @@ if(!"out.path" %in% ls()){
   
 }
 
-stacked <- read_csv(out.path) %>% 
-  mutate(medianBT = 2 - medianBT)
+stacked <- read_csv(out.path)
+
 summary(stacked$pop_dens)
 # create a subset where state of lowest and highest population density is retained
 stacked_sub <- stacked %>% 
@@ -30,7 +30,7 @@ SX06_data <- stacked_sub %>%  filter(growth_type == "logistic")
 
 # FIG 4 A: distribution of life history trait and behavioural trait under different densities and coefficients of variation
 (SX06_A <- 
-    ggplot(SX06_data, aes(x = medianBT, y = medianLH))+
+    ggplot(SX06_data, aes(x = medianLH, y = medianBT))+
     geom_line(aes(group = tot_coefvar, color = tot_coefvar),  alpha = 1)+
     geom_point(aes(color = tot_coefvar, shape = pop_group),  alpha = 1, size = 2)+
     scale_color_viridis_c("Coefficient of variation", values = c(0, 0.1, 0.3, 1))+
@@ -38,13 +38,13 @@ SX06_data <- stacked_sub %>%  filter(growth_type == "logistic")
     theme_clean()+
     scale_size_continuous(range = c(.5,5))+
     theme(legend.position = "bottom", text = element_text(size = 8), legend.title = element_text(size = 8), legend.text = element_text(size = 8), legend.key.height = unit(4, "mm"))+
-    xlab("Responsiveness (2-BT)")+
-    ylab("Relative investment\nto reproduction (LH)")+
+    ylab("Responsiveness (BT)")+
+    xlab("Relative investment to reproduction (LH)")+
     guides(size = guide_legend(title = "Population\nDensity")))
 
 # Fig 4 B: Distribution of movement behaviour and investment to reproduction
 (SX06_B <- 
-    ggplot(SX06_data, aes(x = median_movement_activity, y = median_repo_activity))+
+    ggplot(SX06_data, aes(y = median_movement_activity, x = median_repo_activity))+
     geom_line(aes(group = tot_coefvar, color = tot_coefvar),  alpha = 1)+
     geom_point(aes(color = tot_coefvar, shape = pop_group),  alpha = 1, size = 2)+
     scale_color_viridis_c("Coefficient of\nvariation", breaks = c(round(min(SX06_data$tot_coefvar), 1) + 0.2, round(max(SX06_data$tot_coefvar), 1) - 0.2), labels = c(paste0(round(min(SX06_data$tot_coefvar), 1) + 0.2, " (stabile)"), paste0(max(round(SX06_data$tot_coefvar, 1)) - 0.2, " (labile)")), values = c(0, 0.1, 0.3, 1))+
@@ -52,8 +52,8 @@ SX06_data <- stacked_sub %>%  filter(growth_type == "logistic")
     theme_clean()+
     scale_size_continuous(range = c(.5,5), breaks = c(0.05, 0.15, 0.25))+
     theme(legend.position = "right", text = element_text(size = 8), legend.title = element_text(size = 8), legend.text = element_text(size = 8), legend.box = "vertical", legend.key.height = unit(4, "mm"))+
-    xlab("Movement rate")+
-    ylab("Rate of investment to reproduction")+
+    ylab("Movement rate")+
+    xlab("Rate of investment to reproduction")+
     guides(size = guide_legend(title = "Population\nDensity")))
 
 

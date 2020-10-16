@@ -14,8 +14,9 @@ if(!"out.path" %in% ls()){
   
 }
 
-stacked<- read_csv(out.path) %>% 
-  mutate(medianBT = 2 - medianBT)
+stacked<- read_csv(out.path) 
+
+
 
 #identify varied parameter
 
@@ -43,7 +44,7 @@ stacked_sub <- stacked %>%
 stacked_sub$pop_group[is.na(stacked_sub$pop_group)] <- "high"
 
 (Fig_SX5 <- 
-    ggplot(stacked_sub, aes(x = medianBT, y = medianLH))+
+    ggplot(stacked_sub, aes(y = medianBT, x = medianLH))+
     geom_text(aes(label = ifelse(stopped, paste("stopped"), NA)), color = "gray")+
     geom_point(data = dplyr::select(stacked_sub %>% filter(var == "default"), -var), color = "gray")+
     geom_line(data = dplyr::select(stacked_sub %>% filter(var == "default"), -var), aes(group = tot_coefvar, color = as.factor(disturbancefrequency)), color = "gray")+
@@ -51,12 +52,12 @@ stacked_sub$pop_group[is.na(stacked_sub$pop_group)] <- "high"
     geom_point(aes(color = as.factor(disturbancefrequency), shape = pop_group),  alpha = 1, size = 2)+
     scale_shape_manual("Population density", values  =c(1,16))+
     theme_clean()+
-    scale_color_manual("Disturbance frequency", values = c("coral1", "turquoise"))+
+    scale_color_manual("Disturbance interval", values = c("coral1", "turquoise"))+
     scale_size_continuous(range = c(.5,5))+
     theme(legend.position = "bottom", text = element_text(size = 8), legend.title = element_text(size = 8), legend.text = element_text(size = 8), legend.key.height = unit(4, "mm"))+
-    ylim(0.1, 0.8)+
-    xlab("Responsiveness (2-BT)")+
-    ylab("Relative investment\nto reproduction (LH)")+
+    xlim(0.1, 0.8)+
+    ylab("Responsiveness (BT)")+
+    xlab("Relative investment to reproduction (LH)")+
     guides(size = guide_legend(title = "Population\nDensity"))+
     facet_wrap(~var))
 

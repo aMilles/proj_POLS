@@ -14,8 +14,7 @@ if(!"out.path" %in% ls()){
   out.path <- here("simulations", sim.date,"Additional_test",  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
 }
 
-stacked <- read_csv(out.path) %>% 
-  mutate(medianBT = 2 - medianBT)
+stacked <- read_csv(out.path)
 
 
 # create a subset where state of lowest and highest population density is retained
@@ -30,7 +29,7 @@ SX11_data <- stacked_sub %>%  filter(growth_type == "logistic") %>% mutate(pop_d
 
 # FIG 4 A: distribution of life history trait and behavioural trait under different densities and coefficients of variation
 (Fig_SX11 <- 
-    ggplot(SX11_data, aes(x = medianBT, y = medianLH))+
+    ggplot(SX11_data, aes(y = medianBT, x = medianLH))+
     geom_line(aes(group = tot_coefvar, color = pop_dens > .9),  alpha = 1)+
     geom_point(aes(color = pop_dens > .9, shape = pop_group),  alpha = 1, size = 2)+
     scale_color_manual("Population density > .9", values = c("turquoise", "coral1"))+
@@ -38,8 +37,8 @@ SX11_data <- stacked_sub %>%  filter(growth_type == "logistic") %>% mutate(pop_d
     theme_clean()+
     scale_size_continuous(range = c(.5,5))+
     theme(legend.position = "bottom", text = element_text(size = 8), legend.title = element_text(size = 8), legend.text = element_text(size = 8), legend.key.height = unit(4, "mm"), legend.box = "vertical", plot.background = element_blank())+
-    xlab("Responsiveness (2-BT)")+
-    ylab("Relative investment\nto reproduction (LH)")+
+    ylab("Responsiveness (BT)")+
+    xlab("Relative investment\nto reproduction (LH)")+
     guides(size = guide_legend(title = "Population\nDensity")))
 
 

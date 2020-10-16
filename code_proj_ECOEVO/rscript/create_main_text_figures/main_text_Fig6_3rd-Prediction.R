@@ -50,14 +50,14 @@ pred.df$p[pred.df$growth_type == "logistic"] <- predict(fit_log, pred.df[pred.df
     geom_point(data = model_stacked %>% filter(growth_type == "logistic"), aes(x = pop_dens, y = r0, fill = gt_group, color = gt_group, group = gt_group),  inherit.aes = F, alpha = 1, shape = 21, size = 1, color = "white")+
     geom_line(aes(color = gt_group, group = gt_group), size = 1, linetype = "solid")+
     scale_y_continuous(limits = c(0, .02), breaks = c(0, 0.0075, 0.01, 0.0138, .02), labels = c("0.00", expression("r"[0]), 0.01, expression("r"[0]), .02))+
-    scale_fill_brewer("Generation time", type = "qual", palette = "Set2")+
-    scale_color_brewer("Generation time", type = "qual", palette = "Set2")+
+    scale_fill_brewer("Generation time (POL)", type = "qual", palette = "Set2")+
+    scale_color_brewer("Generation time (POL)", type = "qual", palette = "Set2")+
      geom_segment(aes(x = 0.25, xend = 0.35, y = 0.0108, yend = 0.0088), arrow = arrow(length = unit(0.2, "cm"), ends = "both"), color = "turquoise")+
      geom_segment(aes(x = 0.25, xend = 0.35, y = 0.005, yend = 0.0041), arrow = arrow(length = unit(0.2, "cm"), ends = "both"), color = "coral1", )+
     geom_text(data = pred.df %>% filter(growth_type == "logistic") %>% group_by(gt_group) %>% filter(pop_dens == pop_dens[which.min(abs(pop_dens - 0.3))]), aes(x = pop_dens, y = p + c(0.003, -0.002)), label = expression(lambda), color = c("turquoise", "coral1"))+
     theme_clean()+
-    xlab("Population density [n / patch]")+
-    ylab("Reproductive rate [offspring / t]")+
+    xlab("Population density [n/patch]")+
+    ylab("Reproductive rate [offspring/t]")+
     theme(legend.position = "top", text = element_text(size = 10), legend.title = element_text(size = 10), legend.text = element_text(size = 10), plot.background = element_rect(fill = NA, color = NA)))
 
-ggsave(here::here("figs", sim.date, "main_text", "Fig6.png"), Fig6, width = 8, height = 8, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "main_text", "Fig6.png"), Fig6, width = 9, height = 8, units = "cm", dpi = 600)

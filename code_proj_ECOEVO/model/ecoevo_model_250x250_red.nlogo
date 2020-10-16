@@ -4,7 +4,7 @@ globals[
 
   ;LANDSCAPE PARAMETERS
   ; disturbance-frequency            ; integer, interval between disturbances
-  ; disturbance-intensity             ; continouus, maximum proportion of the population removed by a disturbance
+  ; disturbance-intensity             ; continuous, maximum proportion of the population removed by a disturbance
 
   ; PLOTTING
   ; plot-update-frequency            ; integer, interval between updates of plots and landscape
@@ -13,27 +13,28 @@ globals[
 
   ; GLOBAL CONSTANTS
 
-  ;maintenance-cost                  ; continouus, energy costs per turn
-  ;reproduction-threshold            ; continouus, energy investment required to reproduce
+  ;maintenance-cost                  ; continuous, energy costs per turn
+  ;reproduction-threshold            ; continuous, energy investment required to reproduce
 
-  ;growth-factor-logistic
-  ;growth-rate-linear
-  ;growth-limit-linear
+  ;growth-factor-logistic            ; continuous, location of maximum growth-rate in dependence of resource-density with logistic growth
+  ;growth-rate-linear                ; continuous, growth rate per turn with linear growth
+  ;growth-limit-linear               ; continuous, maximum resource-density with linear growth
 
-  ;harvest-rate-curvature
-  ;harvest-rate-factor
+  ;harvest-rate-curvature            ; continuous, convex (< 1) / linear (=1) / convace (> 1) relationship between resource-density (x) and harvest-rate (y)
+  ;harvest-rate-factor               ; continuous, modifier of harvest-rate (higher = higher harvest-rate at same resource-density)
 
-  ;stochasticity-LH
-  ;stochasticity-BT
+  ;stochasticity-LH                  ; continuous, standard deviation of normally distributed inheritance of LH
+  ;stochasticity-BT                  ; continuous, standard deviation of normally distributed inheritance of BT
 
-  BT-range                          ; continouus, upper boundary of the behavioural trait (lower boundary is always 0)
-  LH-range                          ; continouus, upper boundary of the life-history trait (lower boundary is always 0)
+  BT-range                          ; continuous, upper boundary of the behavioural trait (lower boundary is always 0)
+  LH-range                          ; continuous, upper boundary of the life-history trait (lower boundary is always 0)
 
 
 
   ; OUTPUT-RELATED
   ; create-output                    ; boolean, create output for single animals
   ; save-landscape                   ; boolean, save harvest-rate of patches every 25 time steps
+  working-directory                  ; directory of the project (automatically set to the main folder of the project)
   output-id                          ; string, id of the simultion
   animals-file-name                  ; string, name of the .csv with single animals as output
   metadata-file-name                 ; string, name of the .csv with metdata (global parameters ..) as output
@@ -59,32 +60,34 @@ globals[
 
 ]
 
+extensions [ shell pathdir]
+
 breed [animals animal]
 
 patches-own
 [
-  resource-density                   ; continouus, amount of resources
-  harvest-rate                       ; continouus, amount of resources which can be foraged per time step
+  resource-density                   ; continuous, amount of resources
+  harvest-rate                       ; continuous, amount of resources which can be foraged per time step
 ]
 
 animals-own
 [
-  gathered-resources                 ; continouus, amount of gathered resources (this value is used for plotting and is resetted at the plotting interval)
-  perceived-current-mean-hr          ; continouus, average harvest-rate of neighbouring patches (queen's neighborhood)
-  current-hr                         ; continouus, harvest-rate at the current patch
+  gathered-resources                 ; continuous, amount of gathered resources (this value is used for plotting and is resetted at the plotting interval)
+  perceived-current-mean-hr          ; continuous, average harvest-rate of neighbouring patches (queen's neighborhood)
+  current-hr                         ; continuous, harvest-rate at the current patch
 
-  BT                                 ; continouus, behavioral trait which determines the likelihood to stay at a patch despite better harvest-rates at neighboring patches
-  LH                                 ; continouus, life-history-trait which determines the interval between reproductive events and the amount of resources allocated to reproduction per time step
+  BT                                 ; continuous, behavioral trait which determines the likelihood to stay at a patch despite better harvest-rates at neighboring patches
+  LH                                 ; continuous, life-history-trait which determines the interval between reproductive events and the amount of resources allocated to reproduction per time step
 
   age                                ; integer, number of time steps alive
-  soma                               ; continouus, amount of resources in the buffer (if < 0, the animal dies)
+  soma                               ; continuous, amount of resources in the buffer (if < 0, the animal dies)
 
   times-moved                        ; integer, the times an animal moved to a neighboring patch (this value is used for plotting and is resetted at the plotting interval)
   generation                         ; integer, the xth generation after the initial individuals (initial individuals have the generation 0)
   age-first-reproduction             ; integer, number of time-steps until an individual reproduced
   n-offspring                        ; integer, number of reproductive events
   list-age-at-reproduction           ; list, integer values of age at reproduction
-  r-buffer                           ; continouus, required investment to reproduction to reproduce
+  r-buffer                           ; continuous, required investment to reproduction to reproduce
 ]
 
 
@@ -108,13 +111,21 @@ to setup
   ;;; output generation (2 separate files includings metadata (parameter settings) and individual data
   if create-output
   [
-    set-current-directory output-directory
+    ; if the model is stored in the intended directory and the working directory has not been set, the working directory
+    ; will be set to the "proj_POLS" folder
+    ; otherwise a simulations folder will be create at the directory of the model
+    if member? "code_proj_ECOEVO" shell:pwd [shell:cd "../../"]
+
+    set working-directory shell:pwd
+
+    ; if the simulations folder does not yet exist, it is created
+    if not pathdir:isDirectory? word working-directory output-directory [pathdir:create word working-directory output-directory]
+
     let time-string remove ":" substring date-and-time 0 12
-    set output-id word time-string random-float 1
+    set output-id (word Working-directory output-directory time-string random-float 1)
 
 
     initialize-output-lists
-
 
     set metadata-file-name word output-id "_metadata.csv"
     set animals-file-name word output-id "_animals.csv"
@@ -276,7 +287,6 @@ to go
     plot-BT-dist
     plot-BT-LH
     plot-count-animals
-
   ]
 
   if (ticks > 1) and (ticks mod plot-update-frequency = 0) and plot-landscape
@@ -311,7 +321,7 @@ to forage-or-relocate
     let neighs neighbors
     set perceived-current-mean-hr mean [harvest-rate] of neighs
 
-    ifelse (perceived-current-mean-hr - current-hr) <= random-gamma (BT ^ 2) (1 / BT ^ 2)
+    ifelse (perceived-current-mean-hr - current-hr) <= random-gamma ((BT-range - BT) ^ 2) (1 / ((BT-range) - BT) ^ 2) ; small value added to avoid division by zero
     [
       forage
     ]
@@ -414,7 +424,7 @@ to check-reproduction
       set LH random-normal parental-LH stochasticity-LH
 
       if BT < 0 [set BT 0.0000000001]
-      if BT > BT-range [set BT BT-range]
+      if BT > BT-range [set BT BT-range - 0.000001]
 
       if LH < 0 [set LH 0]
       if LH > LH-range [set LH LH-range]
@@ -626,11 +636,11 @@ end
 GRAPHICS-WINDOW
 365
 159
-873
-668
+823
+618
 -1
 -1
-2.0
+1.8
 1
 10
 1
@@ -725,7 +735,7 @@ plot-update-frequency
 plot-update-frequency
 1
 5001
-9999999.0
+5001.0
 500
 1
 NIL
@@ -846,7 +856,7 @@ disturbance-frequency
 disturbance-frequency
 1
 10001
-50.0
+301.0
 100
 1
 NIL
@@ -859,7 +869,7 @@ SWITCH
 275
 create-output
 create-output
-0
+1
 1
 -1000
 
@@ -872,7 +882,7 @@ disturbance-intensity
 disturbance-intensity
 0
 100
-99.0
+75.0
 1
 1
 %
@@ -884,7 +894,7 @@ INPUTBOX
 295
 341
 output-directory
-Y:/Home/milles/proj_POLS2/simulations/2020-08-20/Additional_test2/
+/simulations/2020-10-10/Main_Predictions/
 1
 0
 String
@@ -947,7 +957,7 @@ maintenance-cost
 maintenance-cost
 0.01
 0.25
-0.04
+0.15
 0.01
 1
 NIL
@@ -1536,7 +1546,7 @@ NetLogo 6.1.1
       <value value="1.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="output-directory">
-      <value value="&quot;Y:/Home/milles/proj_POLS2/simulations/2020-08-20/Main_Predictions/&quot;"/>
+      <value value="&quot;Y:/Home/milles/proj_POLS/simulations/2020-10-05/Main_Predictions/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="growth-rate-linear">
       <value value="0.1"/>

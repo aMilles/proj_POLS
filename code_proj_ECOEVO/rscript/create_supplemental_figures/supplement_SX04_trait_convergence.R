@@ -13,7 +13,11 @@ library(raster)
 
 if(!"sim.date" %in% ls()){
   sim.date = "2020-08-20"
+  
 } 
+
+transform.BT <- sim.date == "2020-08-20" 
+
 
 sim.path <- here("simulations", sim.date, "S1_Saturation", "processed")
 
@@ -96,14 +100,16 @@ r_log[is.na(r_log)]<- cellStats(r_log, min)
 
 gg_df <- reshape2::melt(setNames(data.frame(rasterToPoints(stack(r_lin, r_log))), c("x", "y", "linear", "logistic")),id.vars = c("x", "y"))
 
+if(transform.BT) gg_df$x = 2 - gg_df$x
+
 
 (SX4_B <- 
   ggplot(gg_df)+
   geom_raster(aes(x = x, y = y, fill = (100 * value)))+
   facet_wrap(~variable)+
   scale_fill_viridis_c("Proportion of\npopulation [%]", na.value = "black")+
-  ylab("Life-history trait")+
-  xlab("Behavioural trait")+
+  xlab("Relative investment to reproduction (LH)")+
+  ylab("Responsiveness (BT)")+
   theme_clean()+
   theme(panel.grid.major = element_blank()))
   

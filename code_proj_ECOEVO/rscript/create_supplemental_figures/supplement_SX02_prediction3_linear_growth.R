@@ -61,4 +61,5 @@ pred.df$p[pred.df$growth_type == "logistic"] <- predict(fit_log, pred.df[pred.df
      theme(legend.position = "top", text = element_text(size = 10), legend.title = element_text(size = 10), legend.text = element_text(size = 10), plot.background = element_rect(fill = NA, color = NA)))
 
 
+
 ggsave(here::here("figs", sim.date, "supplemental", paste0("Fig_SX02", ".png")), Fig_SX02, width = 8, height = 8, units = "cm", dpi = 600)

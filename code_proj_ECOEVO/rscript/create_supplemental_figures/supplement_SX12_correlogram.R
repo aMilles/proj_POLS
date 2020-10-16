@@ -19,7 +19,6 @@ if(!"out.path" %in% ls()){
 # create dataset for correlogram
 
 SX12_data <- read_csv(out.path) %>% 
-  mutate(medianBT = 2 - medianBT) %>% 
   dplyr::select("medianBT", "medianLH", "longevity", "em_rate", "generation_time", "movement_activity", "repo_activity", "n_offspring", "r_buffer", "soma") %>% 
   mutate(fe = (r_buffer + n_offspring * 50 + soma) / longevity) %>% 
   dplyr::select("medianBT", "medianLH", "longevity", "em_rate", "generation_time", "movement_activity", "repo_activity", "fe")

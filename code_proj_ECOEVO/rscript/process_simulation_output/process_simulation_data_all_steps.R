@@ -1,10 +1,10 @@
 library(here)
 
 L1 <- "simulations" #L1 folder where simulations are stored
-sim.date <- L2 <- "2020-08-20" #L2 date of experiment conduction
-L3 <- "S1_Saturation" #L3 experiment_name: only experiments with create-output = T and save-landscape = F
+sim.date <- L2 <- "2020-10-05" #L2 date of experiment conduction
+L3 <- "Main_Predictions" #L3 experiment_name: only experiments with create-output = T and save-landscape = F
 
-n_cores <- 2 #NUMBER OF CORES TO USE FOR PARALLEL PROCESSING OF SIMULATION DATA
+n_cores <- 10 #NUMBER OF CORES TO USE FOR PARALLEL PROCESSING OF SIMULATION DATA
 
 ##############
 ### STEP 1 ###

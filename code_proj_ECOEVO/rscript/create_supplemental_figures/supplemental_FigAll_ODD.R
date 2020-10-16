@@ -19,10 +19,10 @@ if(!"sim.date" %in% ls()){
 
 qs <- seq(-1, 2, length.out = 100)
 
-BT.9 <- pgamma(qs, shape = .6^2, scale = .5^2)
-BT.6 <- pgamma(qs, shape = .9^2, scale = .9^2)
+BT.14 <- pgamma(qs, shape = (2- 1.4)^2, scale = (2 - 1.4)^2)
+BT.11 <- pgamma(qs, shape = (2 - 1.1)^2, scale = (2 - 1.1)^2)
 
-df <- data.frame(BT = rep(c(.6, .9), each = 100), prob = c(BT.6, BT.9), qs = qs)
+df <- data.frame(BT = rep(c(1.4, 1.1), each = 100), prob = c(BT.14, BT.11), qs = qs)
 
 
 (gg_BT <- 
@@ -123,3 +123,4 @@ ggplot(harvest_rate, aes(x = RD, y = hr))+
   theme_clean())
 
 ggsave(here("figs", sim.date, "ODD", "Fig5.png"), Fig5, width = 8, height = 8, unit = "cm")
+

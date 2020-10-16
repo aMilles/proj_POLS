@@ -94,10 +94,12 @@ landscape_proc <- landscape_proc[, -match(c("x", "y", "hr"), names(landscape_pro
     theme_clean()+ 
     ylab("Median harvest rate [n/t]")+
     xlab("Time")+
-    scale_x_continuous(breaks = c(10000, 15000), limits = c(5000, 20000))+
-    scale_y_continuous(breaks = c(0.5, 1.5, 2.5), limits = c(0, 3.5))+
-    annotation_custom(grob = gg_min_hr, xmin = min_hr.ls$ticks[1] - 2000, xmax = min_hr.ls$ticks[1] + 2000, ymin = 2.2, ymax = 2.9)+
-    annotation_custom(grob = gg_max_hr, xmin = max_hr.ls$ticks[1] - 2000, xmax = max_hr.ls$ticks[1] + 2000, ymin = 2.8, ymax = 3.5)+
+    scale_x_continuous(breaks = c(5000, 10000, 15000, 20000), limits = c(5000, 20000))+
+    scale_y_continuous(breaks = c(0.5, 1.5, 2.5), limits = c(0, 3.4))+
+    annotation_custom(grob = gg_min_hr, xmin = min_hr.ls$ticks[1] - 2000, xmax = min_hr.ls$ticks[1] + 2000, ymin = 2.7, ymax = 3.4)+
+    annotation_custom(grob = gg_max_hr, xmin = max_hr.ls$ticks[1] - 2000, xmax = max_hr.ls$ticks[1] + 2000, ymin = 2.7, ymax = 3.4)+
+    geom_point(aes(x = min_hr.ls$ticks[1], y = Fig2A_data$mhr[Fig2A_data$ticks == min_hr.ls$ticks[1]]), shape = 23, fill = "gray", size = 2)+
+    geom_point(aes(x = max_hr.ls$ticks[1], y = Fig2A_data$mhr[Fig2A_data$ticks == max_hr.ls$ticks[1]]), shape = 23, fill = "gray", size = 2)+
     theme(panel.border = element_blank(), plot.background = element_blank(), panel.grid = element_blank(), panel.grid.major = element_blank(), panel.grid.major.y = element_blank()))
 
 #################
@@ -126,19 +128,36 @@ df.density_no_disturbance <-
 ys <- c(min(Fig2A_data$Population.density), reldist::wtd.quantile(Fig2A_data$`Population.density`, seq(0.1, .9, length.out = 9),weight =  round(Fig2A_data$Population.density * 62500)), max(Fig2A_data$Population.density))
 
 # plot fluctuation in population density with grey-white stripes as deciles, indicate time of lowest and highest harvest rate with vertical dashed lines
+
+
+
 (Fig2B <-
     ggplot()+
-    geom_rect(data = data.frame(), aes(xmin = 19999,  xmax = Inf,  ymin = ys[-11], ymax = ys[-1]), fill = rep(c("gray90", "white"), 5), color = "gray90")+
+    geom_rect(data = data.frame(), aes(xmin = 19999,  xmax = Inf,  ymin = ys[-11], ymax = ys[-1]), fill = rep(c("gray90", "white"), 5), color = "black")+
     geom_vline(xintercept = 19999, color = "white")+
-    geom_vline(aes(xintercept = min_hr.ls$ticks[1]), color = "gray50", linetype = "dashed")+
-    geom_vline(aes(xintercept = max_hr.ls$ticks[1]), color = "gray50", linetype = "dashed")+
-    geom_line(data = df.density_no_disturbance, aes(x = ticks, y = ninds/62500, color = as.character(round(coef_var(df.density_no_disturbance$ninds), 2))), linetype = "dotted")+
-    geom_line(data = Fig2A_data, aes(x = ticks, y = Population.density, color = as.character(round(coef_var(landscape_proc[landscape_proc$ID == Fig2A_data$ID[1],]$Population.density), 2))))+
-    geom_line(data = landscape_proc[landscape_proc$ID != Fig2A_data$ID[1],], aes(x = ticks, y = Population.density, group = ID, color = as.character(round(coef_var(landscape_proc[landscape_proc$ID != Fig2A_data$ID[1],]$Population.density), 2))), linetype = "dotted")+
+    
+    geom_line(data = df.density_no_disturbance, aes(x = ticks, y = ninds/62500,
+                                                    color = as.character(round(coef_var(df.density_no_disturbance$ninds), 2)), 
+                                                    linetype = as.character(round(coef_var(df.density_no_disturbance$ninds), 2))
+                                                    ))+
+    
+    geom_line(data = Fig2A_data, aes(x = ticks, y = Population.density, 
+                                     color = as.character(round(coef_var(landscape_proc[landscape_proc$ID == Fig2A_data$ID[1],]$Population.density), 2)), 
+                                     linetype = as.character(round(coef_var(landscape_proc[landscape_proc$ID == Fig2A_data$ID[1],]$Population.density), 2))
+                                     ))+
+    
+    geom_line(data = landscape_proc[landscape_proc$ID != Fig2A_data$ID[1],], aes(x = ticks, y = Population.density, group = ID,
+                                                                                 color = as.character(round(coef_var(landscape_proc[landscape_proc$ID != Fig2A_data$ID[1],]$Population.density), 2)), 
+                                                                                 linetype = as.character(round(coef_var(landscape_proc[landscape_proc$ID != Fig2A_data$ID[1],]$Population.density), 2))
+                                                                                 ))+
     theme_clean()+
     scale_color_manual("Coefficient\nof variation", values = c("turquoise", "coral1", "black"))+
-    ylab("Population density")+
-    scale_x_continuous("Time", breaks = c(10000, 15000), limits = c(5000, 20000))+
+    scale_linetype_manual("Coefficient\nof variation", values = c("dotted", "dashed", "solid"))+
+    ylab("Population density [n/patch]")+
+    geom_point(aes(x = min_hr.ls$ticks[1], y = Fig2A_data$Population.density[Fig2A_data$ticks == min_hr.ls$ticks[1]]), shape = 23, fill = "gray", size = 2)+
+    geom_point(aes(x = max_hr.ls$ticks[1], y = Fig2A_data$Population.density[Fig2A_data$ticks == max_hr.ls$ticks[1]]), shape = 23, fill = "gray", size = 2)+
+    scale_x_continuous("Time", breaks = c(5000, 10000, 15000, 20000), limits = c(5000, 20000))+
+    scale_y_continuous("Population density", breaks = c(0, 0.5, 1))+
     theme(panel.grid = element_blank(), panel.grid.major.y = element_blank(), panel.border = element_blank(), plot.background = element_blank(), legend.position = "bottom", legend.title = element_text(size = 9), legend.text = element_text(size = 9)))
 
 ################

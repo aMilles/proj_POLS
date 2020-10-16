@@ -10,6 +10,12 @@ if(any(!paste0("L", seq(3)) %in% ls())){
   L3 <- "Main_predictions"
 }
 
+
+
+# if simulation output from 2020-08-20 is used BT needs to be transformed by 2 - BT, later simulations do not require this transformation as it is implemented in the model 
+
+transform.BT <- L2 == "2020-08-20" 
+
 # get files with aggregated simulations
 agg.path <- here(L1,  L2,L3,  "processed", "output_aggregated")
 stacked.file <-  here(L1,  L2,L3,  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
@@ -20,7 +26,10 @@ aggregated.files <- list.files(agg.path, full.names = T)
 # stack the data into one dataset
 stacked_aggregated <- do.call(rbind, lapply(as.list(aggregated.files), function(x) readr::read_csv(x)))
 
+if (transform.BT) stacked_aggregated$medianBT <- 2 - stacked_aggregated$medianBT
+
 # save them in a folder
+
 dir.create(dirname(stacked.file))
 data.table::fwrite(stacked_aggregated, file = stacked.file)
 
@@ -40,6 +49,9 @@ if(file.exists(intermediate.path)){
   
   # stack the data into one dataset
   stacked_intermediate <- do.call(rbind, lapply(as.list(intermediate.files), function(x) readr::read_csv(x)))
+  
+  if (transform.BT) stacked_intermediate$medianBT <- 2 - stacked_intermediate$medianBT
+  
   
   # save them in a folder
   dir.create(dirname(stacked.file))
@@ -61,6 +73,10 @@ if(file.exists(agg.path_alt)){
   
   # stack the data into one dataset
   stacked_agg_alt <- do.call(rbind, lapply(as.list(agg_alt.files), function(x) readr::read_csv(x)))
+  
+  if (transform.BT) stacked_agg_alt$medianBT <- 2 - stacked_agg_alt$medianBT
+  
+  
   
   # save them in a folder
   dir.create(dirname(stacked.file))

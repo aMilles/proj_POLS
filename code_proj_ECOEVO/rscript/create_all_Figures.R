@@ -12,7 +12,7 @@ dir.create(here("figs", sim.date, "ODD")) # PATH TO FIGURES IN ODD
 
 ### MAIN TEXT FIGURES
 
-for(script in list.files(here("code_proj_ECOEVO", "rscript", "create_main_text_figures"), full.names = T)){
+for(script in list.files(here("code_proj_ECOEVO", "rscript", "create_main_text_figures"), full.names = T)[-1]){
   source(script)
   rm(list = ls()[!ls() %in% c("sim.date")])
 }

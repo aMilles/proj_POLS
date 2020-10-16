@@ -16,8 +16,7 @@ if(!"out.path" %in% ls()){
 }
 
 
-stacked <- read_csv(out.path) %>% 
-  mutate(medianBT = 2 - medianBT)
+stacked <- read_csv(out.path)
 summary(stacked$pop_dens)
 # create a subset where state of lowest and highest population density is retained
 stacked_sub <- stacked %>% 
@@ -39,14 +38,14 @@ Fig3A_data <- data.frame(x = runif(400), y = runif(400, max = 2))
     geom_point(data = Fig3A_data, aes(x = x, y = y), shape = 21, size = .5)+
     ylab("Responsiveness (BT)")+
     xlab("Relative investment\nto reproduction (LH)")+
-    geom_rect(data = stacked %>%  filter(growth_type == "logistic"), aes(ymax = 2- min(medianBT), ymin = 2 - max(medianBT), xmin = min(medianLH), xmax = max(medianLH)), fill = NA, color = "gray50", size = 2)+
+    geom_rect(data = stacked %>%  filter(growth_type == "logistic"), aes(ymax = min(medianBT), ymin = max(medianBT), xmin = min(medianLH), xmax = max(medianLH)), fill = NA, color = "gray50", size = 2)+
     theme_clean()+
     scale_x_continuous(breaks = c(0, .5, 1), labels = c("0 (low)", .5, "1 (high)"))+
     scale_y_continuous(breaks = c(0, 1, 2), labels = c("0 (low)", 1, "2 (high)"))+
   theme(text = element_text(size = 8), plot.background = element_rect(fill = NA, color = NA), panel.grid.major = element_blank()))
 
 # create figure with traits on y and x and generation time as color scale wiith aggregated (not subsetted)
-(Fig3B <- ggplot(stacked %>% filter(growth_type == "logistic"), aes(y = 2 - medianBT, x = medianLH))+
+(Fig3B <- ggplot(stacked %>% filter(growth_type == "logistic"), aes(y = medianBT, x = medianLH))+
     geom_point(aes(fill = log10(generation_time)),  alpha = 1, shape = 21, color = "white")+
     geom_smooth(method = "lm", se = F, formula = y ~ poly(x,2), color = "black", size = 1, linetype = "dashed")+
     scale_fill_viridis_c("Generation time\n(log 10)", breaks = c(2, 3), labels = c("2 (fast)", "3 (slow)"))+
@@ -69,7 +68,7 @@ Fig3 <-
 ggsave(here::here("figs", sim.date, "main_text", paste0("Fig3", ".png")), Fig3, width = 8, height = 14.5, units = "cm", dpi = 600)
 
 
-<####################
+####################
 #### FIGURE 4 ######
 ####################
 
