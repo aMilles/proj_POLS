@@ -321,7 +321,7 @@ to forage-or-relocate
     let neighs neighbors
     set perceived-current-mean-hr mean [harvest-rate] of neighs
 
-    ifelse (perceived-current-mean-hr - current-hr) <= random-gamma ((BT-range - BT) ^ 2) (1 / ((BT-range) - BT) ^ 2) ; small value added to avoid division by zero
+    ifelse (perceived-current-mean-hr - current-hr) <= random-gamma ((BT-range - BT) ^ 2) (1 / ((BT-range) - BT) ^ 2) ; EQUATION I
     [
       forage
     ]
@@ -355,7 +355,7 @@ to relocate
   let current-hr_ current-hr
 
   ;move-to one-of other patches
-  move-to max-one-of neighbors with [harvest-rate >= current-hr_] [harvest-rate - current-hr_] ; EQUATION I
+  move-to max-one-of neighbors with [harvest-rate >= current-hr_] [harvest-rate - current-hr_]
   set current-hr 0
   set times-moved times-moved + 1
 end
