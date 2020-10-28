@@ -75,15 +75,15 @@ options(scipen = 10)
 ### raster 
 df.ras <- df.density[,-match("ID", names(df.density))]
 
-r <- raster(ncols = 100, nrows = 100, xmn = 0, xmx = 2, ymn = 0, ymx = 1)
+r <- raster(ncols = 100, nrows = 100, xmn = 0, xmx = 1, ymn = 0, ymx = 2)
 
 rdat_lin <- df.ras %>% 
   filter(growthtype == "linear") %>% 
-  dplyr::select(BT, LH)
+  dplyr::select(LH, BT)
 
 rdat_log <- df.ras %>% 
   filter(growthtype == "logistic") %>% 
-  dplyr::select(BT, LH)
+  dplyr::select(LH, BT)
 
 
 r_lin <- raster::rasterize(rdat_lin, r, fun = sum)
@@ -100,14 +100,14 @@ r_log[is.na(r_log)]<- cellStats(r_log, min)
 
 gg_df <- reshape2::melt(setNames(data.frame(rasterToPoints(stack(r_lin, r_log))), c("x", "y", "linear", "logistic")),id.vars = c("x", "y"))
 
-if(transform.BT) gg_df$x = 2 - gg_df$x
+if(transform.BT) gg_df$y = 2 - gg_df$y
 
 
 (SX4_B <- 
   ggplot(gg_df)+
   geom_raster(aes(x = x, y = y, fill = (100 * value)))+
   facet_wrap(~variable)+
-  scale_fill_viridis_c("Proportion of\npopulation [%]", na.value = "black")+
+  scale_fill_viridis_c("Proportion of\npopulation [%]", na.value = "black", values  = c(0, .5,.75, 1))+
   xlab("Relative investment to reproduction (LH)")+
   ylab("Responsiveness (BT)")+
   theme_clean()+
