@@ -1,3 +1,8 @@
+### PROCESSING STEP 1 ###
+# IN THIS SCRIPT 
+# USING THE RAW SIMULATION OUTPUT
+# data wrangling to rearrange NetLogo Output of individuals in single simulations to a data.frame object
+
 library(here)
 library(tidyverse)
 library(parallel)
@@ -8,7 +13,7 @@ library(foreach)
 # if simulation path is not yet defined via the process_simulation_data_all_steps.R script, define it here
 if(any(!paste0("L", seq(3)) %in% ls())){
   L1 <- "simulations"
-  L2 <- "2020-07-29"
+  L2 <- "2020-08-20"
   L3 <- "Main_predictions"
 }
 
@@ -57,7 +62,7 @@ process_step_1 <- function(file.nr, animal.files, metadata.files, L1, L2, L3){
     dsplit.animals <-lapply(split.animals, stringi::stri_split_regex, pattern = "\\[")
     
     
-    ### LISTS ARE EXPORTED FROM NETLOGO AS A CHARACTER STRING, THIS FUNCTIONS SPLITS SINGLE DATA POINTS AND ARRANGES THE DATA IN DATA.FRAME
+    ### LISTS ARE EXPORTED FROM NETLOGO AS A CHARACTER STRING, THIS FUNCTIONS SPLITS SINGLE DATA POINTS AND ARRANGES THE DATA IN A DATA.FRAME STRUCTURE
     dfs <- 
       lapply(dsplit.animals, function(x) {
         

@@ -1,4 +1,3 @@
-library(shiny)
 library(tidyverse)
 library(here)
 library(ggthemes)
@@ -17,7 +16,7 @@ if(!"out.path" %in% ls()){
 
 
 stacked <- read_csv(out.path)
-summary(stacked$pop_dens)
+
 # create a subset where state of lowest and highest population density is retained
 stacked_sub <- stacked %>% 
   group_by(tot_coefvar) %>%
@@ -40,8 +39,8 @@ Fig3A_data <- data.frame(x = runif(400), y = runif(400, max = 2))
     xlab("Relative investment\nto reproduction (LH)")+
     geom_rect(data = stacked %>%  filter(growth_type == "logistic"), aes(ymax = min(medianBT), ymin = max(medianBT), xmin = min(medianLH), xmax = max(medianLH)), fill = NA, color = "gray50", size = 2)+
     theme_clean()+
-    scale_x_continuous(breaks = c(0, .5, 1), labels = c("0 (low)", .5, "1 (high)"))+
-    scale_y_continuous(breaks = c(0, 1, 2), labels = c("0 (low)", 1, "2 (high)"))+
+    scale_x_continuous(breaks = c(0, .5, 1), labels = c("0", .5, "1"))+
+    scale_y_continuous(breaks = c(0, 1, 2), labels = c("0", 1, "2"))+
   theme(text = element_text(size = 8), plot.background = element_rect(fill = NA, color = NA), panel.grid.major = element_blank()))
 
 # create figure with traits on y and x and generation time as color scale wiith aggregated (not subsetted)
@@ -52,7 +51,7 @@ Fig3A_data <- data.frame(x = runif(400), y = runif(400, max = 2))
     ylab("Responsiveness (BT)")+
     xlab("Relative investment\nto reproduction (LH)")+
     theme_clean()+
-    theme(legend.position = "bottom", text = element_text(size = 8), legend.title = element_text(size = 8), legend.text = element_text(size = 8), legend.key.height = unit(4, "mm"), plot.background = element_rect(fill = NA, color = NA)))
+    theme(legend.position = "bottom", text = element_text(size = 8), legend.title = element_text(size = 9), legend.text = element_text(size = 9), legend.key.height = unit(4, "mm"), plot.background = element_rect(fill = NA, color = NA)))
 
 
 

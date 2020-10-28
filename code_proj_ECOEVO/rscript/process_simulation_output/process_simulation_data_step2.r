@@ -1,9 +1,18 @@
+### PROCESSING STEP 2 ###
+# IN THIS SCRIPT 
+# USING THE STEP-1-PROCESSED OUTPUT 
+# Further life history traits are calculated
+# data of individuals is aggregated to the level of subpopulations (median trait values, IQR, standard deviation are calculated)
+# subpopulations are defined by the decile of population density individuals experienced
+# output only returns data of the aggregated level
+
 library(tidyverse)
 library(here)
 library(foreach)
 library(doSNOW)
 library(parallel)
 library(tibble)
+
 # if simulation path is not yet defined via the process_simulation_data_all_steps.R script, define it here
 if(any(!paste0("L", seq(3)) %in% ls())){
   L1 <- "simulations"
@@ -92,10 +101,7 @@ process_sim_step2 <-
         fill(ninds, .direction = "down") %>% 
         fill(ninds, .direction = "up")
       
-      # export the population data for visualization purposes
-      #save(list = "population_data", file =  here::here("figs", "density", paste0(tools::file_path_sans_ext(basename(X[1])), "_plot.RData")))
 
-      
       #######################
       ### 2nd filter step ###
       #######################
@@ -206,43 +212,6 @@ process_sim_step2 <-
       dir.create(out.path_aggregated, showWarnings = F)
       readr::write_csv(filtered_step3, path = paste0(out.path_aggregated, "/", basename(X[2] )))
       
-      
-      # OPTIONAL AGGREGATION WITHOUT SUBPOPULATIONS
-      # 
-      # filtered_step4 <- 
-      #   filtered_step2 %>%
-      #   
-      #   # aggregate metrics for each group
-      #   mutate(pop_dens = mean(pop_dens)) %>%
-      #   mutate(longevity = mean(longevity)) %>% 
-      #   mutate(r_buffer = mean(r_buffer)) %>% 
-      #   mutate(times_moved = median(times_moved)) %>% 
-      #   mutate(generation_time = median(generation_time)) %>% 
-      #   mutate(em_rate = sum(death.cause == "environment")/length(death.cause)) %>% 
-      #   
-      #   # movement activity distribution
-      #   mutate(median_movement_activity = median(movement_activity)) %>% 
-      #   mutate(upper_movement_activity = quantile(movement_activity, 0.75)) %>%
-      #   mutate(lower_movement_activity = quantile(movement_activity, 0.25)) %>%
-      #   
-      #   # investment to reproduction distribution
-      #   mutate(median_repo_activity = median(repo_activity)) %>%
-      #   mutate(upper_repo_activity = quantile(repo_activity, 0.75)) %>%
-      #   mutate(lower_repo_activity = quantile(repo_activity, 0.25)) %>%
-      #   
-      #   # behavioural trait distribution
-      #   mutate(medianBT = median(BT)) %>%
-      #   mutate(upperBT = quantile(BT, 0.75)) %>%
-      #   mutate(lowerBT = quantile(BT, 0.25)) %>%
-      #   
-      #   # life history trait distribution
-      #   mutate(medianLH = median(LH)) %>%
-      #   mutate(upperLH = quantile(LH, 0.75)) %>%
-      #   mutate(lowerLH = quantile(LH, 0.25))
-      #   
-      #   dir.create(paste0(out.path_aggregated, "_alternative"), showWarnings = F)
-      #   readr::write_csv(filtered_step4[1, ], path = paste0(out.path_aggregated, "_alternative", "/", basename(X[2])))
-      # 
     }
   }
 

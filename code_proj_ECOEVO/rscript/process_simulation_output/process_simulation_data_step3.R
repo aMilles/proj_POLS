@@ -1,3 +1,8 @@
+### PROCESSING STEP 3 ###
+# IN THIS SCRIPT 
+# USING THE STEP-2-PROCESSED OUTPUT 
+# to aggregate output of all simulations of one experiment to one data set
+
 library(shiny)
 library(tidyverse)
 library(here)

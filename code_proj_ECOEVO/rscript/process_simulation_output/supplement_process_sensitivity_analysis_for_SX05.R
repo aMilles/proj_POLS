@@ -1,9 +1,12 @@
+# This script uses the nlrx-package to run NetLogo from R with a specified set of parameters for sensitivity analysis
+
+
 library(nlrx)
 library(tidyverse)
 library(here)
 library(future)
 
-# Parameters for sensitivity analysis
+# Parameters for sensitivity analysis (name, default, min, max, use-case)
 ps <-    c("n-inds",                   6250,     1,     10000, "all",
            "maintenance-cost",           0.15,  0.01,      0.25, "all",
            "reproduction-threshold",     50,    30,       100, "all",
@@ -53,6 +56,7 @@ variables <- as.list(log_oat[31:34,])
 variables <- lapply(variables, function(x) list("values" = x))
 
 # create a list of parameters kept constant (remember to specify the output-directory!)
+# adjust the output-directory!
 constants <-
 list("disturbance-intensity" = 90, 
      "create-output" = "true",

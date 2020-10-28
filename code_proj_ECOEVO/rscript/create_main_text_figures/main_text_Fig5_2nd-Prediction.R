@@ -9,7 +9,7 @@ library(ggthemes)
 if(!"out.path" %in% ls()){
   
   if(!"sim.date" %in% ls()){
-    sim.date = "2020-10-05"
+    sim.date = "2020-08-20"
   } 
   
   out.path <- here("simulations", sim.date,"Main_Predictions",  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
@@ -23,7 +23,7 @@ stacked <- read_csv(out.path)
 ##################
 
 # calculate scaled interquartile range for traits and phenotypic behaviour (only data with logistic growth model)
-stacked$sd
+
 Fig5_data <-
   stacked[, - which(names(stacked) == "tot_coefvar")] %>% 
   filter(growth_type == "logistic") %>% 

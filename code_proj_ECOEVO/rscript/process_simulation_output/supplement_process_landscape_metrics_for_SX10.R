@@ -1,3 +1,6 @@
+# This script calculates landscape metrics (standard deviation and mean of harvest rates based on the raw NetLogo output)
+# Data is stored for later analysis
+
 library(here)
 library(tidyverse)
 library(ggthemes)
@@ -40,4 +43,4 @@ ls_meta <- do.call(rbind, metadata)
 
 merged_ls <- merge(ls_meta, ls, by = "ID")
 table(merged_ls$`harvest-rate-curvature`)
-write_csv(here("simulations", sim.date, "test", "ls_merged_agg.csv"), x = merged_ls)
+write_csv(here("simulations", sim.date, sim.type, "ls_merged_agg.csv"), x = merged_ls)
