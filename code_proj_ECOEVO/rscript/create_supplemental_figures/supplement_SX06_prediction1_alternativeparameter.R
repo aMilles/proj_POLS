@@ -10,13 +10,13 @@ if(!"out.path" %in% ls()){
   if(!"sim.date" %in% ls()){
     sim.date = "2020-08-20"
   } 
-  out.path <- here("simulations", sim.date,"Additional_test",  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
+  out.path <- here("simulations", sim.date,"Supplement_altered_growth_factor_logistic_POLS",  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
   
 }
 
+#read data
 stacked <- read_csv(out.path)
 
-summary(stacked$pop_dens)
 # create a subset where state of lowest and highest population density is retained
 stacked_sub <- stacked %>% 
   group_by(tot_coefvar) %>%
@@ -57,13 +57,13 @@ SX06_data <- stacked_sub %>%  filter(growth_type == "logistic")
     guides(size = guide_legend(title = "Population\nDensity")))
 
 
-
+# arrange figures in a grid
 SX06 <- 
   gridExtra::grid.arrange(
-    ggdraw(SX06_A + theme(legend.position = "none", plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("A"),
-    ggdraw(SX06_B+ theme(plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("B"), 
+    ggdraw(SX06_A + theme(legend.position = "none", plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("a"),
+    ggdraw(SX06_B+ theme(plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("b"), 
     layout_matrix = matrix(c(rep(1, 4), rep(2, 6)), ncol = 10, nrow = 1))
 
-
-ggsave(here::here("figs", sim.date, "supplemental", paste0("Fig_SX06", ".png")), SX06, width = 16, height = 8, units = "cm", dpi = 600)
+# save arranged figures
+ggsave(here::here("figs", sim.date, "supplemental", paste0("Fig_SX06", ".jpeg")), SX06, width = 16, height = 8, units = "cm", dpi = 600)
 

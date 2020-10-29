@@ -16,17 +16,17 @@ if(!"sim.date" %in% ls()){
   
 } 
 
+
+# if sim date is 2020-08-20 transform BT by 2- BT
 transform.BT <- sim.date == "2020-08-20" 
 
 
+# read data of S1_Saturation that has been processed by process_simulation_data_step1.R
 sim.path <- here("simulations", sim.date, "S1_Saturation", "processed")
-
 animal.files <- list.files(sim.path, pattern = "animals.csv", full.names = T)
 metadata.files <- list.files(sim.path, pattern = "metadata.csv", full.names = T)
 
-substr(basename(animal.files), 1, 25) == substr(basename(metadata.files), 1, 25)
-
-
+# store single simulation runs as elements of a list 
 list.sims <- lapply(as.list(animal.files), function(x){
   
   df <- data.frame(readr::read_csv(x), ID = substr(basename(x), 1,30))
@@ -58,9 +58,10 @@ SX4A_data <- df.density %>%
   group_by(ID) %>% 
   filter(!duplicated(ticks))
 
-# Y = POPULATION DENSITY
+# avoid scientific abbrevation of numbers
 options(scipen = 10)
 
+# generate plot element A
 (SX4_A <- 
   ggplot(SX4A_data, aes(x = ticks, y = ninds.x / (SX4A_data$ninds.y * 10), group = ID, color = ID)) +
   geom_line()+
@@ -72,7 +73,7 @@ options(scipen = 10)
   scale_x_continuous(breaks = c(0, 50000, 100000))
 
 
-### raster 
+### rasterize the abundance of LH and BT at linear and logistic growth types
 df.ras <- df.density[,-match("ID", names(df.density))]
 
 r <- raster(ncols = 100, nrows = 100, xmn = 0, xmx = 1, ymn = 0, ymx = 2)
@@ -86,23 +87,22 @@ rdat_log <- df.ras %>%
   dplyr::select(LH, BT)
 
 
+# create two rasters which show the abundance of a certain combination of BT and LH as a proportion of all combinations 
 r_lin <- raster::rasterize(rdat_lin, r, fun = sum)
 r_log <- raster::rasterize(rdat_log, r, fun = sum)
-
 
 r_lin <- r_lin / cellStats(r_lin, sum)
 r_log <- r_log / cellStats(r_log, sum)
 
-
 r_lin[is.na(r_lin)]<- cellStats(r_lin, min)
 r_log[is.na(r_log)]<- cellStats(r_log, min)
 
-
+# convert the raster-data to data format that is readable by ggplot
 gg_df <- reshape2::melt(setNames(data.frame(rasterToPoints(stack(r_lin, r_log))), c("x", "y", "linear", "logistic")),id.vars = c("x", "y"))
 
 if(transform.BT) gg_df$y = 2 - gg_df$y
 
-
+# create plot element B
 (SX4_B <- 
   ggplot(gg_df)+
   geom_raster(aes(x = x, y = y, fill = (100 * value)))+
@@ -113,11 +113,11 @@ if(transform.BT) gg_df$y = 2 - gg_df$y
   theme_clean()+
   theme(panel.grid.major = element_blank()))
   
-
+# arrange the plots
 SX4 <- gridExtra::grid.arrange(SX4_A, SX4_B, nrow = 2)
 
-
-ggsave(here("figs", sim.date, "supplemental", "Fig_SX04.png"), plot = SX4, width = 15, height = 11, units = "cm")
+# save the plots
+ggsave(here("figs", sim.date, "supplemental", "Fig_SX04.png"), plot = SX4, width = 15, height = 11, units = "cm", dpi = 600)
 
 
 ################################################################

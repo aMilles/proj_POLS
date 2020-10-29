@@ -48,7 +48,7 @@ SX1_data <-
 
 
 
-ggsave(here::here("figs", sim.date, "supplemental", "Fig_SX01.png"), SX1, width = 9, height = 10, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", "Fig_SX01.jpeg"), SX1, width = 9, height = 10, units = "cm", dpi = 600)
 
 
 ################################
@@ -79,5 +79,5 @@ SX3_data <-
         scale_x_continuous(breaks = c(2, 2.5, 3)))
 
 # save plot
-ggsave(here::here("figs", sim.date, "supplemental", "Fig_SX03.png"), SX3, width = 9, height = 13, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", "Fig_SX03.jpeg"), SX3, width = 9, height = 13, units = "cm", dpi = 600)
 

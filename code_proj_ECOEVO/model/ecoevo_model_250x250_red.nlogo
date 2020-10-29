@@ -118,7 +118,7 @@ to setup
 
     set working-directory shell:pwd
 
-    ; if the simulations folder does not yet exist, it is created
+    ; if the simulations folder does not yet exist, it is created - this may cause an issue when run from BehaviourSpace. Restarting the simulation fixes the issue
     if not pathdir:isDirectory? word working-directory output-directory [pathdir:create word working-directory output-directory]
 
     let time-string remove ":" substring date-and-time 0 12
@@ -1546,7 +1546,7 @@ NetLogo 6.1.1
       <value value="1.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="output-directory">
-      <value value="&quot;Y:/Home/milles/proj_POLS/simulations/2020-10-05/Main_Predictions/&quot;"/>
+      <value value="&quot;/simulations/2020-08-20/Main_Predictions/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="growth-rate-linear">
       <value value="0.1"/>
@@ -1609,7 +1609,7 @@ NetLogo 6.1.1
       <value value="1.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="output-directory">
-      <value value="&quot;Y:/Home/milles/proj_POLS2/simulations/2020-08-20/Landscape_fluctuation_Example/&quot;"/>
+      <value value="&quot;/simulations/2020-08-20/Landscape_fluctuation_Example/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="growth-rate-linear">
       <value value="0.1"/>
@@ -1672,13 +1672,13 @@ NetLogo 6.1.1
       <value value="1.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="output-directory">
-      <value value="&quot;Y:/Home/milles/proj_POLS2/simulations/2020-08-20/S1_Saturation/&quot;"/>
+      <value value="&quot;/simulations/2020-08-20/S1_Saturation/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="growth-rate-linear">
       <value value="0.1"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="test_growth_factor_logistic" repetitions="1" runMetricsEveryStep="false">
+  <experiment name="Supplement_altered_growth_factor_logistic_landscape" repetitions="1" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="40000"/>
@@ -1737,78 +1737,13 @@ NetLogo 6.1.1
       <value value="1.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="output-directory">
-      <value value="&quot;Y:/Home/milles/proj_POLS2/simulations/2020-08-20/test/&quot;"/>
+      <value value="&quot;/proj_POLS2/simulations/2020-08-20/Supplement_altered_growth_factor_logistic_landscape/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="growth-rate-linear">
       <value value="0.1"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="test_harvest_rate_curvature" repetitions="1" runMetricsEveryStep="false">
-    <setup>setup</setup>
-    <go>go</go>
-    <timeLimit steps="40000"/>
-    <enumeratedValueSet variable="growth-factor-logistic">
-      <value value="3"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="maintenance-cost">
-      <value value="0.15"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="plot-landscape">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="harvest-rate-factor">
-      <value value="5"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="growth-type">
-      <value value="&quot;logistic&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="save-landscape">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="disturbance-frequency">
-      <value value="100"/>
-      <value value="400"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="n-inds">
-      <value value="6250"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="plot-animals">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="plot-update-frequency">
-      <value value="9999999"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="create-output">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="stochasticity-BT">
-      <value value="0.05"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="reproduction-threshold">
-      <value value="50"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="stochasticity-LH">
-      <value value="0.03"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="disturbance-intensity">
-      <value value="90"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="growth-limit-linear">
-      <value value="15"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="harvest-rate-curvature">
-      <value value="0.8"/>
-      <value value="1.5"/>
-      <value value="2.25"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="output-directory">
-      <value value="&quot;Y:/Home/milles/proj_POLS2/simulations/2020-08-20/test/&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="growth-rate-linear">
-      <value value="0.1"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="Additional_test" repetitions="1" runMetricsEveryStep="false">
+  <experiment name="Supplement_altered_growth_factor_logistic_POLS" repetitions="1" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="40000"/>
@@ -1873,78 +1808,7 @@ NetLogo 6.1.1
       <value value="1.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="output-directory">
-      <value value="&quot;Y:/Home/milles/proj_POLS2/simulations/2020-08-20/Additional_test/&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="growth-rate-linear">
-      <value value="0.1"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="Additional_test2" repetitions="1" runMetricsEveryStep="false">
-    <setup>setup</setup>
-    <go>go</go>
-    <timeLimit steps="40000"/>
-    <enumeratedValueSet variable="growth-factor-logistic">
-      <value value="3"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="maintenance-cost">
-      <value value="0.04"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="plot-landscape">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="harvest-rate-factor">
-      <value value="5"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="save-landscape">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="growth-type">
-      <value value="&quot;logistic&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="n-inds">
-      <value value="6250"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="disturbance-frequency">
-      <value value="50"/>
-      <value value="75"/>
-      <value value="100"/>
-      <value value="125"/>
-      <value value="150"/>
-      <value value="200"/>
-      <value value="300"/>
-      <value value="400"/>
-      <value value="500"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="plot-animals">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="create-output">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="reproduction-threshold">
-      <value value="50"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="plot-update-frequency">
-      <value value="9999999"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="stochasticity-BT">
-      <value value="0.05"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="stochasticity-LH">
-      <value value="0.03"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="disturbance-intensity">
-      <value value="75"/>
-      <value value="99"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="growth-limit-linear">
-      <value value="15"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="harvest-rate-curvature">
-      <value value="1.5"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="output-directory">
-      <value value="&quot;Y:/Home/milles/proj_POLS2/simulations/2020-08-20/Additional_test2/&quot;"/>
+      <value value="&quot;/simulations/2020-08-20/Supplement_altered_growth_factor_logistic_POLS/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="growth-rate-linear">
       <value value="0.1"/>

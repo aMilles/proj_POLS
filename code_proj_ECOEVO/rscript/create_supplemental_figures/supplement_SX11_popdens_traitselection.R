@@ -11,7 +11,7 @@ if(!"out.path" %in% ls()){
     sim.date = "2020-08-20"
   } 
   
-  out.path <- here("simulations", sim.date,"Additional_test",  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
+  out.path <- here("simulations", sim.date,"Supplement_altered_growth_factor_logistic_POLS",  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
 }
 
 stacked <- read_csv(out.path)
@@ -42,5 +42,5 @@ SX11_data <- stacked_sub %>%  filter(growth_type == "logistic") %>% mutate(pop_d
     guides(size = guide_legend(title = "Population\nDensity")))
 
 
-ggsave(here::here("figs", sim.date, "supplemental", paste0("Fig_SX11.png")), Fig_SX11, width = 9, height = 9, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", paste0("Fig_SX11.jpeg")), Fig_SX11, width = 9, height = 9, units = "cm", dpi = 600)
 

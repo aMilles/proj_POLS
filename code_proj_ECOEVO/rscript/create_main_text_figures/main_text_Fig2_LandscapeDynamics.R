@@ -18,10 +18,13 @@ if(!"landscape_file" %in% ls()){
   landscape_file <- here("simulations", sim.date, sim.type)
 } 
 
+# function to calculate coefficient of variation
 coef_var <- function(x) sd(x)/mean(x) 
 
+# read landscape data
 landscape <- lapply(as.list(list.files(landscape_file, pattern = "_ls.csv", full.names = T)),function(x) cbind(read_csv(x, col_names = F), basename(x)))
 landscape <- do.call(rbind, landscape)
+# convert population size to population density (62500 patches)
 landscape[,5] <- landscape[,5] / 62500
 names(landscape) <- c("ticks", "x", "y", "hr", "Population density", "ID")
 
@@ -94,7 +97,7 @@ landscape_proc <- landscape_proc[, -match(c("x", "y", "hr"), names(landscape_pro
     theme_clean()+ 
     ylab("Median harvest rate [n/t]")+
     xlab("Time")+
-    scale_x_continuous(breaks = c(5000, 10000, 15000, 20000), limits = c(5000, 20000))+
+    scale_x_continuous(breaks = c(5000, 10000, 15000, 20000), limits = c(5000, 20000), labels = c("5,000", "10,000", "15,000", "20,000"))+
     scale_y_continuous(breaks = c(0.5, 1.5, 2.5), limits = c(0, 3.4))+
     annotation_custom(grob = gg_min_hr, xmin = min_hr.ls$ticks[1] - 2000, xmax = min_hr.ls$ticks[1] + 2000, ymin = 2.7, ymax = 3.4)+
     annotation_custom(grob = gg_max_hr, xmin = max_hr.ls$ticks[1] - 2000, xmax = max_hr.ls$ticks[1] + 2000, ymin = 2.7, ymax = 3.4)+
@@ -107,7 +110,7 @@ landscape_proc <- landscape_proc[, -match(c("x", "y", "hr"), names(landscape_pro
 #################
 
 ### GET POPULATION DENSITY FROM DATA WITHOUT DISTURBANCE
-#READ STEP 2 ANIMAL FILES AND METADATA
+#READ ANIMAL FILES AND METADATA THAT HAVE BEEN PROCESSED BY PROCESS_SIMULATION_DATA_STEP1.R
 sim.path <- here("simulations", "2020-08-20",  "S1_Saturation", "processed")
 
 animal.files <- list.files(sim.path, pattern = "animals.csv", full.names = T)
@@ -116,6 +119,7 @@ metadata.files <- list.files(sim.path, pattern = "metadata.csv", full.names = T)
 exmp_file <- animal.files[which.max(file.info(animal.files)$size)]
 exmp_data_animal <- data.frame(read_csv(exmp_file), ID = substr(basename(exmp_file), 1,30))
 
+# REMOVE DUPLICATE INDIVIDUALS AND TICKS SO ONLY ONE MEASURE OF POPULATION DENSITY PER TIME STEP IS RETAINED
 df.density_no_disturbance <- exmp_data_animal %>%
   filter(!duplicated(who)) %>% 
   filter(!duplicated(ticks))
@@ -124,13 +128,10 @@ df.density_no_disturbance <-
   filter(ticks > 5000) %>% 
   mutate(coef_var_tot = coef_var(ninds))
 
-# calculate deciles for plot
+# calculate deciles of population density for plot (note: weighted deciles were calculated here to account for the size of each group.)
 ys <- c(min(Fig2A_data$Population.density), reldist::wtd.quantile(Fig2A_data$`Population.density`, seq(0.1, .9, length.out = 9),weight =  round(Fig2A_data$Population.density * 62500)), max(Fig2A_data$Population.density))
 
 # plot fluctuation in population density with grey-white stripes as deciles, indicate time of lowest and highest harvest rate with vertical dashed lines
-
-
-
 (Fig2B <-
     ggplot()+
     geom_rect(data = data.frame(), aes(xmin = 19999,  xmax = Inf,  ymin = ys[-11], ymax = ys[-1]), fill = rep(c("gray90", "white"), 5), color = "black")+
@@ -156,7 +157,7 @@ ys <- c(min(Fig2A_data$Population.density), reldist::wtd.quantile(Fig2A_data$`Po
     ylab("Population density [n/patch]")+
     geom_point(aes(x = min_hr.ls$ticks[1], y = Fig2A_data$Population.density[Fig2A_data$ticks == min_hr.ls$ticks[1]]), shape = 23, fill = "gray", size = 2)+
     geom_point(aes(x = max_hr.ls$ticks[1], y = Fig2A_data$Population.density[Fig2A_data$ticks == max_hr.ls$ticks[1]]), shape = 23, fill = "gray", size = 2)+
-    scale_x_continuous("Time", breaks = c(5000, 10000, 15000, 20000), limits = c(5000, 20000))+
+    scale_x_continuous("Time", breaks = c(5000, 10000, 15000, 20000), limits = c(5000, 20000), labels = c("5,000", "10,000", "15,000", "20,000"))+
     scale_y_continuous("Population density", breaks = c(0, 0.5, 1))+
     theme(panel.grid = element_blank(), panel.grid.major.y = element_blank(), panel.border = element_blank(), plot.background = element_blank(), legend.position = "bottom", legend.title = element_text(size = 9), legend.text = element_text(size = 9)))
 
@@ -164,7 +165,7 @@ ys <- c(min(Fig2A_data$Population.density), reldist::wtd.quantile(Fig2A_data$`Po
 ### FIGURE 2 ###
 ################
 
-Fig2 <- gridExtra::grid.arrange(ggdraw(Fig2A)+draw_plot_label("A"), ggdraw(Fig2B)+draw_plot_label("B"), ncol = 1)
+Fig2 <- gridExtra::grid.arrange(ggdraw(Fig2A)+draw_plot_label("a"), ggdraw(Fig2B)+draw_plot_label("b"), ncol = 1)
 
-ggsave(here("figs", sim.date, "main_text", "Fig2.png"), Fig2, width = 10, height = 14, units = "cm")
+ggsave(here("figs", sim.date, "main_text", "Fig2.jpeg"), Fig2, width = 10, height = 14, units = "cm")
 

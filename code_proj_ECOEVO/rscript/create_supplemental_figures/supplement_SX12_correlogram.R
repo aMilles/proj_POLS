@@ -23,6 +23,7 @@ SX12_data <- read_csv(out.path) %>%
   mutate(fe = (r_buffer + n_offspring * 50 + soma) / longevity) %>% 
   dplyr::select("medianBT", "medianLH", "longevity", "em_rate", "generation_time", "movement_activity", "repo_activity", "fe")
 
+
 SX12_data <- setNames(SX12_data, c("BT", "LH", "life span", "EM rate", "GT", "MA", "RI", "FE"))
 
 
@@ -82,6 +83,7 @@ GGscatterPlot <- function(data, mapping, ...,
 
 #create correlogram and save it
 
-(FigSX12 <- GGally::ggpairs(SX12_data, upper = list(continous = "na", na  = " "))+theme_clean(base_size = 2)+theme(axis.text = element_text(size = 6), strip.text = element_text(size = 8)))
+(FigSX12 <- GGally::ggpairs(SX12_data, upper = list(continuous = wrap("cor", size = 3)), lower = list(continuous = wrap("smooth", size = .1, color = "gray")))+theme_clean()+theme(axis.text.x =  element_text(size = 6, angle = 45), axis.text.y = element_text(size = 6), panel.grid.major.y = element_blank(), panel.grid = element_blank(), panel.grid.minor.y = element_blank()))
+  
 
-ggsave(here("figs", sim.date, "supplemental", "Fig_SX12.png"), FigSX12, width = 16, height = 10, dpi = 600, units = "cm")
+ggsave(here("figs", sim.date, "supplemental", "Fig_SX12.jpeg"), FigSX12, width = 16, height = 10, dpi = 600, units = "cm")

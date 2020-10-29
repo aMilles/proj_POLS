@@ -35,7 +35,7 @@ df <- data.frame(BT = rep(c(1.4, 1.1), each = 100), prob = c(BT.14, BT.11), qs =
     theme(legend.position = "bottom", legend.title = element_text(size = 9), text =element_text(size = 8), legend.text = element_text(size = 8)))
 
 
-ggsave(here("figs", sim.date, "ODD", "Fig2.png"), gg_BT, width = 8, height = 8, unit = "cm")
+ggsave(here("figs", sim.date, "ODD", "Fig2.jpeg"), gg_BT, width = 8, height = 8, unit = "cm", dpi = 600)
 
 ##################################################
 ######### Fig 3 - Life-history-trait / ###########
@@ -60,7 +60,7 @@ df <- data.frame(LH = rep(c(.3, .5), each = 100), prob = c(LH.2, LH.5), qs = som
     theme(legend.position = "bottom", legend.title = element_text(size = 9), text =element_text(size = 8), legend.text = element_text(size = 8)))
 
 
-ggsave(here("figs", sim.date, "ODD", "Fig3.png"), gg_LH, width = 8, height = 8, unit = "cm")
+ggsave(here("figs", sim.date, "ODD", "Fig3.jpeg"), gg_LH, width = 8, height = 8, unit = "cm", dpi = 600)
 
 
 ##################################################
@@ -92,14 +92,13 @@ df <- data.frame("t" = 0:100, "Growth rate" = RD, "Resource density" = cumsum(RD
   mutate(variable = stringi::stri_replace_all_regex(variable, pattern = "\\.", replacement = " "))
 
 (Fig4 <- 
-ggplot(df, aes(x = t, y = value))+
+ggplot(df %>% filter(variable != "Growth rate"), aes(x = t, y = value))+
   geom_line()+
-  facet_wrap(~variable, scales = "free")+
   theme_clean()+
   xlab("Time steps")+
-  ylab("Value"))
+  ylab("Resource density"))
 
-ggsave(here("figs", sim.date, "ODD", "Fig4.png"), Fig4, width = 12, height = 8, unit = "cm")
+ggsave(here("figs", sim.date, "ODD", "Fig4.jpeg"), Fig4, width = 5, height = 5, unit = "cm", dpi = 600)
 
 
 ##################################################
@@ -122,5 +121,5 @@ ggplot(harvest_rate, aes(x = RD, y = hr))+
   ylab("Harvest rate")+
   theme_clean())
 
-ggsave(here("figs", sim.date, "ODD", "Fig5.png"), Fig5, width = 8, height = 8, unit = "cm")
+ggsave(here("figs", sim.date, "ODD", "Fig5.jpeg"), Fig5, width = 8, height = 8, unit = "cm", dpi = 600)
 

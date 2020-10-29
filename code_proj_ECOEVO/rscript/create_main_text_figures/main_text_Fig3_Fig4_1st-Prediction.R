@@ -54,17 +54,17 @@ Fig3A_data <- data.frame(x = runif(400), y = runif(400, max = 2))
     theme(legend.position = "bottom", text = element_text(size = 8), legend.title = element_text(size = 9), legend.text = element_text(size = 9), legend.key.height = unit(4, "mm"), plot.background = element_rect(fill = NA, color = NA)))
 
 
-
+# arrange figure 3 in a grid
 Fig3 <- 
   gridExtra::grid.arrange(
-    ggdraw(Fig3A + theme(legend.position = "none", plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("A"),
-    ggdraw(Fig3B + theme(plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("B"), 
+    ggdraw(Fig3A + theme(legend.position = "none", plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("a"),
+    ggdraw(Fig3B + theme(plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("b"), 
     layout_matrix = matrix(c(rep(1, 6), rep(2, 7)), ncol = 1, nrow = 13))
 
 
 
 # save figure 3
-ggsave(here::here("figs", sim.date, "main_text", paste0("Fig3", ".png")), Fig3, width = 8, height = 14.5, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "main_text", paste0("Fig3", ".jpeg")), Fig3, width = 8, height = 14.5, units = "cm", dpi = 600)
 
 
 ####################
@@ -103,13 +103,13 @@ Fig4_data <- stacked_sub %>%  filter(growth_type == "logistic")
     guides(size = guide_legend(title = "Population\nDensity")))
 
 
-
+# arrange figure 4 in a grid
 Fig4 <- 
   gridExtra::grid.arrange(
-    ggdraw(p1_plot_BRN_paper + theme(legend.position = "none", plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("A"),
-    ggdraw(p1_plot_phenotypic_behaviour_paper + theme(plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("B"), 
+    ggdraw(p1_plot_BRN_paper + theme(legend.position = "none", plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("a"),
+    ggdraw(p1_plot_phenotypic_behaviour_paper + theme(plot.background = element_rect(fill = NA, color = NA))) + draw_plot_label("b"), 
     layout_matrix = matrix(c(rep(1, 4), rep(2, 6)), ncol = 10, nrow = 1))
 
-
-ggsave(here::here("figs", sim.date, "main_text", paste0("Fig4", ".png")), Fig4, width = 16, height = 8, units = "cm", dpi = 600)
+# save figure 4
+ggsave(here::here("figs", sim.date, "main_text", paste0("Fig4", ".jpeg")), Fig4, width = 16, height = 8, units = "cm", dpi = 600)
 

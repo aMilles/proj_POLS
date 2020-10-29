@@ -3,6 +3,8 @@ library(shiny)
 
 # HARVEST AND GROWTH FUNCTIONS AS IMPLEMENTED IN THE MODEL
 
+if(!sim.date %in% ls()) {sim.date <- "2020-08-20"}
+
 harvest_function <- 
   function(RD_, harvest_alpha, harvest_beta){
     HR = RD_ ^ harvest_alpha / harvest_beta^harvest_alpha
@@ -27,7 +29,7 @@ growth_function <-
 RD <- 0
 for(i in (seq(50))) RD <- append(RD,growth_function(sum(RD), 3, "logistic", 0, 0))
 
-png(here("Figs", "2020-08-20", "supplemental", "Fig_SX08.png"), width = 650, height = 300)
+jpeg(here("Figs", sim.date, "supplemental", "Fig_SX08.jpeg"), width = 650, height = 300)
 par(mfrow = c(1,3), oma = c(0,0,0,0), mar = c(4,4,2,1), bty = "l", cex = 1.5)
 plot(cumsum(RD)[-1], RD[-1], type= "l", xlab = "Resource density", ylab = "Growth rate")
 plot(cumsum(RD)[-1], harvest_function(cumsum(RD)[-1], 1.5, 5), type = "l", xlab = "Resource density", ylab = "Harvest rate")
@@ -41,7 +43,7 @@ dev.off()
 RD <- 0
 for(i in (seq(100))) RD <- append(RD,growth_function(sum(RD), 1.75, "logistic", 0, 0))
 
-png(here("Figs", "2020-08-20", "supplemental", "Fig_SX09.png"), width = 650, height = 300)
+jpeg(here("Figs", sim.date, "supplemental", "Fig_SX09.jpeg"), width = 650, height = 300)
 par(mfrow = c(1,3), oma = c(0,0,0,0), mar = c(4,4,2,1), bty = "l", cex = 1.5)
 plot(cumsum(RD)[-1], RD[-1], type= "l", xlab = "Resource density", ylab = "Growth rate")
 plot(cumsum(RD)[-1], harvest_function(cumsum(RD)[-1], 1.5, 5), type = "l", xlab = "Resource density", ylab = "Harvest rate")

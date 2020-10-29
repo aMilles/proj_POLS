@@ -2,8 +2,12 @@ library(here)
 library(tidyverse)
 library(ggthemes)
 
+# define date and experiment name
+
 sim.date <- "2020-08-20"
-sim.type <- "test"
+sim.type <- "Supplement_altered_growth_factor_logistic_landscape"
+
+# use landscape data output from "Supplement_altered_growth_factor_logistic_landscape"-experiment
 
 ls <- read_csv(here("simulations", sim.date, sim.type, "ls_merged_agg.csv"))
 
@@ -56,9 +60,9 @@ ggplot(ls, aes(color = var, x = `Population density`/62500, y = sd_hr/mean_hr))+
       geom_vline(data = data.frame(disturbancefrequency = c(100, 400), ic  =c(NA, .9)),  aes(xintercept = ic), linetype = "dashed"))
 
 
-
+# arrange figures in a grid
 Fig_SX10 <- 
 gridExtra::grid.arrange(Fig_SX10b+theme(legend.position = "none", panel.border = element_blank(), plot.background = element_blank()), Fig_SX10a + theme(strip.text.x = element_blank(), strip.background = element_blank(), panel.background = element_blank(), panel.border = element_blank(), plot.background = element_blank()))
          
-
-ggsave(here("Figs", sim.date, "Supplemental", "Fig_SX10.png"), Fig_SX10, width = 17, height = 12, units = "cm")
+# save figure
+ggsave(here("Figs", sim.date, "Supplemental", "Fig_SX10.jpeg"), Fig_SX10, width = 17, height = 12, units = "cm", dpi = 600)

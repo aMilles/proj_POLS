@@ -46,8 +46,7 @@ file_df <- data.frame(metadata.files, animal.files)[!already_done, ]
 temp_file <- t(apply(file_df, 1, paste))
 file_list <- split(temp_file, seq(nrow(temp_file)))
 
-start.at = 0
-X = file_list[[2]]
+
 # STEP 2 FUNCTION
 process_sim_step2 <- 
   function(X, out.path_aggregated, out.path_intermediate, start.at = 5000, return_f2 = F) {

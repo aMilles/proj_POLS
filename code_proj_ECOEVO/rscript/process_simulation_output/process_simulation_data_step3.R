@@ -62,29 +62,3 @@ if(file.exists(intermediate.path)){
   dir.create(dirname(stacked.file))
   data.table::fwrite(stacked_intermediate, file = stacked.file)
 }
-
-
-### 
-
-# get files with aggregated simulations
-agg.path_alt <- here(L1,  L2,L3,  "processed", "output_aggregated_alternative")
-
-# currently these files are not generated in step 2
-if(file.exists(agg.path_alt)){
-  stacked.file <-  here(L1,  L2,L3,  "processed", "output_aggregated_alternative", "output_aggregated_stacked", "stacked_aggregated_output.csv")
-  
-  
-  agg_alt.files <- list.files(agg.path_alt, full.names = T)
-  
-  # stack the data into one dataset
-  stacked_agg_alt <- do.call(rbind, lapply(as.list(agg_alt.files), function(x) readr::read_csv(x)))
-  
-  if (transform.BT) stacked_agg_alt$medianBT <- 2 - stacked_agg_alt$medianBT
-  
-  
-  
-  # save them in a folder
-  dir.create(dirname(stacked.file))
-  data.table::fwrite(stacked_agg_alt, file = stacked.file)
-}
-

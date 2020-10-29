@@ -14,17 +14,20 @@ if(!"out.path" %in% ls()){
   
 }
 
+# read simulation data
 stacked<- read_csv(out.path) 
 
 
 
-#identify varied parameter
-
+#identify which parameters have been varied in the one-at-a-time approach
 stacked$var <- NA
-names(stacked)[35:55]
+
+# iterate over columns that contain parameters which may have been changed
 for(cols in c(41, 43:53)){
+  # identify columns at which the parameter has been varied
   different_par_row <- which(as.character(as.vector(as.matrix(stacked[,cols]))) != names(sort(table(stacked[,cols]), decreasing = T))[1])
   par_name <- names(stacked)[cols]
+  # create the label for the type of variation as ("parameter: value")
   stacked$var[different_par_row] <- apply(cbind(rep(par_name, length(different_par_row)), stacked[different_par_row, par_name]), 1, paste, collapse = ": ")
 }
 
@@ -34,6 +37,7 @@ stacked$var[(is.na(stacked$var))] <- "default"
 #label simulations that stopped prematurely
 stacked$stopped <- stacked$max_deathtick < 39000
 
+# select subpopulations in the highest and lowest decile of experienced population densities
 stacked_sub <- stacked %>% 
   group_by(tot_coefvar) %>%
   mutate(pop_group = order(pop_dens)) %>%
@@ -43,6 +47,7 @@ stacked_sub <- stacked %>%
 
 stacked_sub$pop_group[is.na(stacked_sub$pop_group)] <- "high"
 
+# generate figure
 (Fig_SX5 <- 
     ggplot(stacked_sub, aes(y = medianBT, x = medianLH))+
     geom_text(aes(label = ifelse(stopped, paste("stopped"), NA)), color = "gray")+
@@ -61,4 +66,5 @@ stacked_sub$pop_group[is.na(stacked_sub$pop_group)] <- "high"
     guides(size = guide_legend(title = "Population\nDensity"))+
     facet_wrap(~var))
 
-ggsave(here("Figs", sim.date, "supplemental", "Fig_SX05.png"), Fig_SX5, width = 17, height = 12, units = "cm")
+#save figure
+ggsave(here("Figs", sim.date, "supplemental", "Fig_SX05.jpeg"), Fig_SX5, width = 17, height = 12, units = "cm")

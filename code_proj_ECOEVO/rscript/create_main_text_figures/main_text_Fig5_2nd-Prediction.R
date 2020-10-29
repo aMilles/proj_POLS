@@ -34,7 +34,7 @@ Fig5_data <-
   dplyr::select(generation_time, "Movement rate\n(scaled SD)", "Rate of investment\nto reproduction (scaled SD)", "Responsiveness\n(BT, scaled SD)", "Relative investment to\nreproduction (LH, scaled SD)") %>% 
   reshape2::melt(id.vars = c("generation_time"))
 
-# create figure
+# create figure 5
 (Fig5 <- 
     ggplot(Fig5_data, aes(x = log10(generation_time), y = value))+
     geom_point(alpha = 1, shape = 21, fill = "gray40", color = "white", size = .8)+
@@ -45,5 +45,5 @@ Fig5_data <-
     ylab("")+
   scale_x_continuous(breaks = c(2, 2.5, 3)))
 
-
-ggsave(here::here("figs", sim.date, "main_text", "Fig5.png"), Fig5, width = 10, height = 11, units = "cm", dpi = 600)
+# save figure 5
+ggsave(here::here("figs", sim.date, "main_text", "Fig5.jpeg"), Fig5, width = 10, height = 11, units = "cm", dpi = 600)
