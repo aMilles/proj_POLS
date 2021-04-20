@@ -32,7 +32,7 @@ To replicate all results (including the supplement) published in JOURNAL XY foll
 
 If you want to run individual experiments:
 
-0. make sure the folder strucuture indicated above exists
+0. make sure the folder strucuture indicated above exists (as scripts that generate these folders may have been skipped with this approach)
 1. run experiment with model ("code/model/POLS_model.nlogo")
 2. to aggregate data to (intra-)populational level 
       - open process_simulation_output/process_simulation_data_all_steps.R
