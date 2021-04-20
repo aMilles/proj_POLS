@@ -1,17 +1,22 @@
-# proj_POLS
-The purpose of this model is to explore three predictions made by Wright et al. (2019) on density-dependent selection of different paces of life (POL). The addressed predictions state that, (H1) selected behavioural and life history traits covary with the POL along different population densities (intra-population) and degrees of fluctuation in population density (inter-population) forming a POLS due to density-dependent selection, (H2) the degree of variation in behavioural and life history traits covaries with the POL as it is linked to the degree of fluctuations in population density, and (H3) density-dependent selection along the POLS is reflected in a trade-off between $r_0$ and γ, i.e. $r_0$ and $γ$ covary with the POL.
+# Fluctuations in density-dependent selection drive the evolution of a pace-of-life-syndrome in populations
 
+## Purpose of this project
+The purpose of this project is to explore three predictions made by Wright et al. (2019) on density-dependent selection of different paces of life (POL). The addressed predictions state that, (H1) selected behavioural and life history traits covary with the POL along different population densities (intra-population) and degrees of fluctuation in population density (inter-population) forming a POLS due to density-dependent selection, (H2) the degree of variation in behavioural and life history traits covaries with the POL as it is linked to the degree of fluctuations in population density, and (H3) density-dependent selection along the POLS is reflected in a trade-off between $r_0$ and γ, i.e. $r_0$ and $γ$ covary with the POL.
+
+
+## Content of this repository
 This repository contains the model as well as the R-Script neccessary to reproduce all results in the main text, supplement as well as figures in the ODD protocol.
 
 In order to run the the model and the subsequent analyses the following folder structure is neccessary:
 
 "/code": rscripts and model code stored<br/>
-"/simulations" output of the NetLogo model and output processed using R programming language stored<br/>
-"/figs", figures generated using R programming language and processed simulation data stored<br/>
-"/tables" tables that contain information about the parameterization are generated<br/>
+"/simulations" output of the NetLogo model and output processed using R programming language (folder will be generated) stored<br/>
+"/figs", figures generated using R programming language and processed simulation data (folder will be generated) stored<br/>
+"/tables" tables that contain information about the parameterization are generated (folder will be generated) <br/>
 
 
-To replicate the results published in JOURNAL XY follow these steps:
+## How to generate results
+To replicate all results (including the supplement) published in JOURNAL XY follow these steps:
 
 1. check for missing packages and install them by using "1_install_missing_packages.R"
 
@@ -27,6 +32,7 @@ To replicate the results published in JOURNAL XY follow these steps:
 
 If you want to run individual experiments:
 
+0. make sure the folder strucuture indicated above exists
 1. run experiment with model ("code/model/POLS_model.nlogo")
 2. to aggregate data to (intra-)populational level 
       - open process_simulation_output/process_simulation_data_all_steps.R
