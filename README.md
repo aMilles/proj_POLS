@@ -10,13 +10,13 @@ This repository contains the model as well as the R-Script neccessary to reprodu
 In order to run the the model and the subsequent analyses the following folder structure is neccessary:
 
 "/code": rscripts and model code stored<br/>
-"/simulations" output of the NetLogo model and output processed using R programming language (folder will be generated) stored<br/>
-"/figs", figures generated using R programming language and processed simulation data (folder will be generated) stored<br/>
+"/simulations" output of the NetLogo model and output processed using R programming language (folder will be generated) d<br/>
+"/figs", figures generated using R programming language and processed simulation data (folder will be generated) <br/>
 "/tables" tables that contain information about the parameterization are generated (folder will be generated) <br/>
 
 
 ## How to generate results
-To replicate all results (including the supplement) published in JOURNAL XY follow these steps:
+**To replicate all results (including the supplement) published in JOURNAL XY follow these steps:**
 
 1. check for missing packages and install them by using "1_install_missing_packages.R"
 
@@ -30,7 +30,7 @@ To replicate all results (including the supplement) published in JOURNAL XY foll
 4. generate the figures with "4_create_all_Figures"
 
 
-If you want to run individual experiments:
+**If you want to run individual experiments:**
 
 0. make sure the folder strucuture indicated above exists (as scripts that generate these folders may have been skipped with this approach)
 1. run experiment with model ("code/model/POLS_model.nlogo")
