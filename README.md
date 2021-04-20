@@ -1,7 +1,7 @@
 # Fluctuations in density-dependent selection drive the evolution of a pace-of-life-syndrome in populations
 
 ## Purpose of this project
-The purpose of this project is to explore three predictions made by Wright et al. (2019) on density-dependent selection of different paces of life (POL). The addressed predictions state that, (H1) selected behavioural and life history traits covary with the POL along different population densities (intra-population) and degrees of fluctuation in population density (inter-population) forming a POLS due to density-dependent selection, (H2) the degree of variation in behavioural and life history traits covaries with the POL as it is linked to the degree of fluctuations in population density, and (H3) density-dependent selection along the POLS is reflected in a trade-off between $r_{0}$ and $\gamma$, i.e. $r_{0}$ and $\gamma$ covary with the POL.
+The purpose of this project is to explore three predictions made by Wright et al. (2019) on density-dependent selection of different paces of life (POL). The addressed predictions state that, (H1) selected behavioural and life history traits covary with the POL along different population densities (intra-population) and degrees of fluctuation in population density (inter-population) forming a POLS due to density-dependent selection, (H2) the degree of variation in behavioural and life history traits covaries with the POL as it is linked to the degree of fluctuations in population density, and (H3) density-dependent selection along the POLS is reflected in a trade-off between  r<sub>0</sub> and &gamma;, i.e.  r<sub>0</sub> and &gamma; covary with the POL.
 
 
 ## Content of this repository
