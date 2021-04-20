@@ -1,24 +1,36 @@
 # proj_POLS
-NetLogo Model and RScripts to analyse predictions of the density-dependence POLS framework
+The purpose of this model is to explore three predictions made by Wright et al. (2019) on density-dependent selection of different paces of life (POL). The addressed predictions state that, (H1) selected behavioural and life history traits covary with the POL along different population densities (intra-population) and degrees of fluctuation in population density (inter-population) forming a POLS due to density-dependent selection, (H2) the degree of variation in behavioural and life history traits covaries with the POL as it is linked to the degree of fluctuations in population density, and (H3) density-dependent selection along the POLS is reflected in a trade-off between $r_0$ and γ, i.e. $r_0$ and $γ$ covary with the POL.
 
-In code_proj_ECOEVO, rscripts and model code are stored<br/>
-In simulations, output of the NetLogo model is stored<br/>
-In figs, output of the R scripts using simulation output is stored<br/>
-In tables, table output of the R scripts using simulation output is stored<br/>
+This repository contains the model as well as the R-Script neccessary to reproduce all results in the main text, supplement as well as figures in the ODD protocol.
+
+In order to run the the model and the subsequent analyses the following folder structure is neccessary:
+
+"/code": rscripts and model code stored<br/>
+"/simulations" output of the NetLogo model and output processed using R programming language stored<br/>
+"/figs", figures generated using R programming language and processed simulation data stored<br/>
+"/tables" tables that contain information about the parameterization are generated<br/>
 
 
-To replicate the results published in ... 
+To replicate the results published in JOURNAL XY follow these steps:
 
-1. run all experiments saved in the NetLogo-Model as well as the rscript "supplement_process_sensitivity_analysis_for_SX05.R" if a one-at-a-time sensitivity analysis is also required. Please consider:<br/>
-     - the sensitivity analysis script runs NetLogo from R and requires an installation of NetLogo 6.1.1 in the parent folder of the project or and adjustment of the path to the NetLogo installation<br/>
-      - create the respective folders in the simulations folder like "simulations/YYYY-MM-DD/Main_Predictions/" manually<br/>
-      - adjust the output-directory of the Experiments to your folder structure
-  
-2. run the "process_simulation_data_all_steps.R" script in "code_proj_ECOEVO\rscript\process_simulation_output" for all experiments except for "Landscape_fluctuations_Example" "test_growth_factor_logistic" and "test_harvest_rate_curvature" (processing is not required here, as only "SIMID_ls.csv"-files are used which do not require this postprocessing. 
+1. check for missing packages and install them by using "1_install_missing_packages.R"
 
-3. run the "supplement_process_landscape_metrics_for_SX10.R" script in "code_proj_ECOEVO\rscript\process_simulation_output" to postprocess the "Landscape_fluctuations_Example"-experiment.
+2. adjust location of NetLogo in the "2_run_all_experiments.R" script, 
+   adjust the number of cores (default is 5 cores/workers used)
+   then run the script to start experiments headless via command line and via R (sensitivity analysis)
 
-4. run the "create_all_Figures.R" script to generate the result and supplemental figures. Consider that: <br/>
-    - "sim.date" needs to be respecified if it deviates from the default setting
-    - the "create_all_Figures.R" script runs all scripts in the create_main_text_figures and create_supplemental_figures folder
-    
+3. adjust the number of cores (default is 5 cores/workers used)
+   process the simulation output with "3_process_simulation_data_all_steps_all_experiments.R"
+
+4. generate the figures with "4_create_all_Figures"
+
+
+If you want to run individual experiments:
+
+1. run experiment with model ("code/model/POLS_model.nlogo")
+2. to aggregate data to (intra-)populational level 
+      - open process_simulation_output/process_simulation_data_all_steps.R
+      - specify the name and folder of the experiment
+      - run the script
+3  once all data has been processed (takes some time)
+      - run scripts in create_main_text_figures to reproduce figures included in the main text
