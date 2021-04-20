@@ -1,9 +1,0 @@
-1. run experiment with model in proj_POLS/code_proj_ECOEVO/model/
-2. to aggregate data to (intra-)populational level into one dataset, 
-      - open process_simulation_output/process_simulation_data_all_steps.R
-      - specify the name and folder of the experiment
-      - run the script
-3  once all data has been processed (takes some time as data may contain several GB)
-      - run scripts in create_main_text_figures to reproduce figures included in the main text
-      - if you've run and processed all experiments saved in the NetLogo BehaviourSpace you may
-        also run the script create_all_Figures.R to also create supplemental figures

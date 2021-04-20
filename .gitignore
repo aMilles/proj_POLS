@@ -1,6 +1,9 @@
 *.docx
-simulations/2020*
-figs/2020*
+simulations/202*
+figs/202*
 table/suppl*
 *.db
 .Rproj.user
+*tmp.nlogo
+code/model/old_versions/*
+code/rscript/create_supplemental_figures/oldversions/*

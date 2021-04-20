@@ -1,0 +1,23 @@
+To run all analyses including the supplement
+
+1. check for missing packages and install them by using "1_install_missing_packages.R"
+
+2. adjust location of NetLogo in the "2_run_all_experiments.R" script, 
+   adjust the number of cores (default is 5 cores/workers used)
+   then run the script to start experiments headless via command line and via R (sensitivity analysis)
+
+3. adjust the number of cores (default is 5 cores/workers used)
+   process the simulation output with "3_process_simulation_data_all_steps_all_experiments.R"
+
+4. generate the figures with "4_create_all_Figures"
+
+
+If you want to run individual experiments:
+
+1. run experiment with model ("code/model/POLS_model.nlogo")
+2. to aggregate data to (intra-)populational level 
+      - open process_simulation_output/process_simulation_data_all_steps.R
+      - specify the name and folder of the experiment
+      - run the script
+3  once all data has been processed (takes some time)
+      - run scripts in create_main_text_figures to reproduce figures included in the main text
