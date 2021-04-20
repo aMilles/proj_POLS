@@ -18,6 +18,7 @@ In order to run the the model and the subsequent analyses the following folder s
 ## How to generate results
 **To replicate all results (including the supplement) published in JOURNAL XY follow these steps:**
 
+0. open [folder](code/rscript) 
 1. check for missing packages and install them by using "1_install_missing_packages.R"
 
 2. adjust location of NetLogo in the "2_run_all_experiments.R" script, 
