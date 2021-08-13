@@ -913,7 +913,7 @@ INPUTBOX
 295
 341
 output-directory
-/simulations/2021-03-28/Supplement_LowFreqHighIntensity_loggrowthVerhulst/
+/simulations/2021-03-28c/Supplement_LowFreqHighIntensity_incomebreeding/
 1
 0
 String
@@ -926,7 +926,7 @@ CHOOSER
 growth-type
 growth-type
 "logistic" "linear"
-0
+1
 
 PLOT
 897
@@ -1006,7 +1006,7 @@ resource-growth-rate-logistic
 resource-growth-rate-logistic
 0
 10
-0.2
+5.0
 .1
 1
 NIL
@@ -1036,7 +1036,7 @@ resource-growth-limit
 resource-growth-limit
 5
 20
-10.0
+15.0
 1
 1
 NIL
@@ -1171,7 +1171,7 @@ CHOOSER
 breeding-type
 breeding-type
 "income-breeding" "capital-breeding"
-1
+0
 
 SWITCH
 18
@@ -1193,7 +1193,7 @@ resource-growth-beta-logistic
 resource-growth-beta-logistic
 0.01
 2
-1.0
+0.02
 .01
 1
 NIL
@@ -1541,7 +1541,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.1
+NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -1781,12 +1781,12 @@ NetLogo 6.1.1
       <value value="true"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="Supplement_LowFreqHighIntensity_incomebreeding" repetitions="5" runMetricsEveryStep="false">
+  <experiment name="Supplement_LowFreqHighIntensity_incomebreeding" repetitions="1" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <exitCondition>ticks = 100000</exitCondition>
     <enumeratedValueSet variable="output-directory">
-      <value value="&quot;/simulations/2021-03-28/Supplement_LowFreqHighIntensity_incomebreeding/&quot;"/>
+      <value value="&quot;/simulations/2021-03-28c/Supplement_LowFreqHighIntensity_incomebreeding/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="growth-type">
       <value value="&quot;linear&quot;"/>

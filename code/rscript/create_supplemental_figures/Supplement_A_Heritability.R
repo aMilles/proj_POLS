@@ -2,6 +2,7 @@ library(here)
 library(tidyverse)
 library(ggthemes)
 
+# scenario with low heritability (main  text)
 L3 <- "MainText_LowFreqHighIntensity"
 sim.date <- "2021-03-28"
 out.path <- list.files(here("simulations", sim.date, L3, "processed", "output_2ndstep_2ndfilter"), full.names = T, pattern = "animals")
@@ -15,13 +16,11 @@ out_lowh2 <- lapply(as.list(out.path), function(x){
   
   return(data.frame(
   "Responsiveness" = cor(merged$BT.x, merged$BT.y),
- "Reproductive investment\nthreshold" = cor(merged$LH.x, merged$LH.y),
-  "Movement activity" = cor(merged$movement_activity.x, merged$movement_activity.y),
-  "Repoductive investment" = cor(merged$repo_activity.x, merged$repo_activity.y)))
-  
+ "Reproductive investment\nthreshold" = cor(merged$LH.x, merged$LH.y)))
 })
 
 
+# scenario with high heritability
 L3 <- "Supplement_LowFreqHighIntensity_highh2"
 sim.date <- "2021-03-28"
 out.path <- list.files(here("simulations", sim.date, L3, "processed", "output_2ndstep_2ndfilter"), full.names = T, pattern = "animals")
@@ -35,17 +34,20 @@ out_highh2 <- lapply(as.list(out.path), function(x){
   
   return(data.frame(
     "Responsiveness" = cor(merged$BT.x, merged$BT.y),
-    "Reproductive investment\nthreshold" = cor(merged$LH.x, merged$LH.y),
-    "Movement activity" = cor(merged$movement_activity.x, merged$movement_activity.y),
-    "Repoductive investment" = cor(merged$repo_activity.x, merged$repo_activity.y)))
+    "Reproductive investment\nthreshold" = cor(merged$LH.x, merged$LH.y)))
   
 })
 
 
-out <- rbind(do.call(rbind, out_highh2) %>% mutate(h2 = " high h² (sd = 0.05)"), do.call(rbind, out_lowh2) %>% mutate(h2 = " low h² (sd = 0.75)"))
+# combine correlations between generations with low and high heritability
+out <- rbind(do.call(rbind, out_highh2) %>% 
+               mutate(h2 = " high h² (sd = 0.05)"), 
+             do.call(rbind, out_lowh2) %>% 
+               mutate(h2 = " low h² (sd = 0.75)")
+             )
 
 
-names(out)
+# create plot
 (cors <- out %>% 
   dplyr::select(Responsiveness, Reproductive.investment.threshold, h2) %>% 
   reshape2::melt(id.vars = "h2")  %>% 

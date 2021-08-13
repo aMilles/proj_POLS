@@ -4,7 +4,7 @@ library(ggthemes)
 library(cowplot)
 
 
-# read csv file with aggregated data
+# read main text results
 
 if(!"out.path" %in% ls()){
   
@@ -18,12 +18,14 @@ if(!"out.path" %in% ls()){
 
 stacked <- read_csv(out.path)
 
+# determine slow and fast end
 Fig4_data_sub <- stacked %>% 
   group_by(sim.id) %>% 
   filter(generation_time == max(generation_time) | generation_time == min(generation_time)) %>% 
   mutate(gt_group = ifelse(generation_time == min(generation_time), "fast end", "slow end"))
 
-
+# split data by disturbance regime (each disturbance regime is repeated 5 times)
+# determine one as the observation and the others as repeats
 split_Fig4data <- split(Fig4_data_sub, paste0(Fig4_data_sub$disturbance.interval, Fig4_data_sub$disturbance.intensity))
 
 facet_data <- lapply(split_Fig4data, function(x){
@@ -37,12 +39,13 @@ facet_data <- lapply(split_Fig4data, function(x){
     return(rbind(x, other))
   }
 })
+
 facet_data_bound<- do.call(rbind, facet_data)%>% 
   mutate(disturbance.interval = paste0("Dist. interval: ", disturbance.interval)) %>% 
   mutate(disturbance.intensity = paste0("Dist. intensity: ", disturbance.intensity))
 
 
-
+# generate plot
 (repeatability <-
     ggplot(facet_data_bound %>% filter(!default), aes(y = medianBT, x = medianLH))+
     geom_point(data = facet_data_bound %>% filter(default), aes(y = medianBT, x = medianLH), color = "gray90")+

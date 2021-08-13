@@ -11,12 +11,13 @@ monomorph_stacked <- read_csv(out.path)
 out.path <- here("simulations", sim.date,"MainText_LowFreqHighIntensity",  "processed","output_aggregated",  "output_stacked", "stacked_aggregated_output.csv")
 polymorph_stacked <- read_csv(out.path)
 
+# define subplot labels
 both_stacked <- rbind(monomorph_stacked %>% mutate(monomorphic = T) %>% mutate(breeding.type = "capital-breeding"), polymorph_stacked %>% mutate(monomorphic = F) %>% mutate(breeding.type = "capital-breeding")) %>% 
   mutate(disturbance.interval = paste0("Dist. interval: ", disturbance.interval)) %>% 
   mutate(disturbance.intensity = paste0("Dist. intensity: ", disturbance.intensity)) %>% 
   mutate(monomorphic = ifelse(monomorphic, "yes", "no"))
 
-
+# generate plot
 (monoVSpolyB <- 
 ggplot(both_stacked, aes(x = medianLH, y = medianBT, color = monomorphic, fill = monomorphic, group = monomorphic))+
   geom_point(alpha = .5)+

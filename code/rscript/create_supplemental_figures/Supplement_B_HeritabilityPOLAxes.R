@@ -3,7 +3,7 @@ library(here)
 library(ggthemes)
 library(cowplot)
 
-
+# analysis with high heritability similar to subplot in Fig. 4 of main text
 if(!"out.path" %in% ls()){
   
   if(!"sim.date" %in% ls()){
@@ -13,7 +13,7 @@ if(!"out.path" %in% ls()){
   out.path <- here("simulations", sim.date,"Supplement_LowFreqHighIntensity_highh2",  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
 }
 
-
+# read data
 highh2_df <- df <- stacked <- read_csv(out.path)
 source(here("code", "rscript", "create_main_text_figures", "main_text_Fig4_1stPrediction_PanelD.R"))
 
@@ -21,6 +21,7 @@ source(here("code", "rscript", "create_main_text_figures", "main_text_Fig4_1stPr
 out.path <- here("simulations", sim.date,"MainText_LowFreqHighIntensity",  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
 default_df <- read_csv(out.path)
 
+# determine slow and fast end in each population
 stacked_both <- rbind(highh2_df, default_df) %>% 
   group_by(stochasticity.BT, disturbance.interval, disturbance.intensity) %>% 
   filter(sim.id == sim.id[1]) %>% 
@@ -30,6 +31,7 @@ stacked_both <- rbind(highh2_df, default_df) %>%
   filter(generation_time == max(generation_time) | generation_time == min(generation_time)) %>% 
   mutate(gt_group = ifelse(generation_time == min(generation_time), "fast end", "slow end"))
 
+# plot POL axes
 Highh2 <- 
 ggplot(stacked_both, aes(x = pop_dens/2500, y = medianBT, color = factor(stochasticity.BT, labels = c("high", "low")), shape = gt_group))+
     geom_point()+

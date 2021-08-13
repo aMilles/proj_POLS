@@ -10,8 +10,8 @@ library(ggthemes)
 # if simulation path is not yet defined via the process_simulation_data_all_steps.R script, define it here
 if(any(!paste0("L", seq(3)) %in% ls())){
   L1 <- "simulations"
-  L2 <- "2020-08-20"
-  L3 <- "Main_predictions"
+  L2 <- "2021-03-28"
+  L3 <- "MainText_LowFreqHighIntensity"
 }
 
 
@@ -35,6 +35,26 @@ if (transform.BT) stacked_aggregated$medianBT <- 2 - stacked_aggregated$medianBT
 # save them in a folder
 
 dir.create(dirname(stacked.file))
+
+stacked_aggregated %>% 
+  select(-ticks, 
+         -who, 
+         -BT, 
+         -LH, 
+         -age, 
+         -frepro, 
+         -n_offspring, 
+         -soma, 
+         -death.tick, 
+         -birth.tick, 
+         -max_birthtick,
+         -max_deathtick,
+         -death.cause,
+         -movement_activity,
+         -repo_activity,
+         )
+names(stacked_aggregated)
+
 data.table::fwrite(stacked_aggregated, file = stacked.file)
 
 
@@ -61,3 +81,4 @@ if(file.exists(intermediate.path)){
   dir.create(dirname(stacked.file))
   data.table::fwrite(stacked_intermediate, file = stacked.file)
 }
+

@@ -22,7 +22,7 @@ ggplot()+
     scale_color_viridis_c("Generation time\n(log 10)", direction = - 1, breaks = c(2.2, 3), labels = c("2.2 (fast)", "3.0 (slow)"))+
   theme_clean()+
   xlab("Population density [n/patch]")+
-  ylab("Reproductive rate [offspring/t]")+
+  ylab("Reproductive rate\n[offspring/time step]")+
   geom_segment(aes(x = 0.2, xend = 0.9, y = 0.008, yend = 0.008), arrow = arrow(length = unit(0.2, "cm")), color = "black")+
   geom_label(aes(x = 0.5, y = 0.008, label = "increasing intraspecific\ncompetition, slower POL"), size = 3)+
   theme(legend.position = "bottom", text = element_text(size = 9), legend.title = element_text(size = 10), legend.text = element_text(size = 9), plot.background = element_rect(fill = NA, color = NA), panel.grid.major.y = element_blank(), strip.text = element_text(size = 8)))

@@ -48,7 +48,7 @@ file_list <- split(temp_file, seq(nrow(temp_file)))
 
 # STEP 2 FUNCTION
 process_sim_step2 <- 
-  function(X, out.path_aggregated, out.path_intermediate, start.at = 5000, return_f2 = F) {
+  function(X, out.path_aggregated, out.path_intermediate, start.at = 10000, return_f2 = F) {
     
     
     # function to calculate coefficient of variation
@@ -104,8 +104,39 @@ process_sim_step2 <-
       ### 2nd filter step ###
       #######################
       
+      # create output before aggregation
+      # this can be disabled to save space as it is not required for main text results
+      if(return_f2){
+        intermediate_output <- filtered_step1 %>% 
+          group_by(who) %>%
+          mutate(death.cause = ifelse(min(soma > 0), "environment", "soma")) %>%
+          mutate(frepro = max(frepro)) %>% 
+          mutate(longevity = max(age)) %>% 
+          mutate(times_moved = max(times_moved)) %>% 
+          mutate(movement_activity = times_moved / longevity) %>% 
+          mutate(n_offspring = max(n_offspring)) %>% 
+          mutate(generation_time = max(generation_time)) %>%
+          mutate(r_buffer = 50 * n_offspring + max(r_buffer)) %>% 
+          mutate(repo_activity = r_buffer / longevity) %>%
+          mutate(r0 = n_offspring / longevity)
+        
+        vec.ind.list <- apply(intermediate_output[, c("birth.tick", "death.tick")], 1, function(x) {
+          population_data[(x[1] - (start.at - 1)):(x[2] - (start.at - 1)), "ninds"]
+        })
+        
+        intermediate_output$pop_dens_at_birth <- unlist(lapply(vec.ind.list, function(x) x[1]))
+        intermediate_output$pop_dens <- unlist(lapply(vec.ind.list, median))
+        
+        intermediate_output <-
+        intermediate_output %>%
+          select(sim.id, BT, LH, pop_dens, pop_dens_at_birth, r0, generation_time, longevity, n_offspring, death.tick, death.cause, birth.tick, who, parental_who)
+        
+        dir.create(out.path_intermediate, showWarnings = F)
+        readr::write_csv(intermediate_output, path = paste0(out.path_intermediate, "/", basename(X[2])))
+      }
+      
       # add traits (age of first reproduction, life span) and phenotypic behaviour for individuals
-      # animals state is saved at birth and death (2 rows) now this is information is redunant and the data is reduced to one row
+      # animals state is saved at birth and death (2 rows) now this is information is redundant and the data is reduced to one row
       filtered_step2 <- 
         filtered_step1 %>% 
         group_by(who) %>%
@@ -155,15 +186,7 @@ process_sim_step2 <-
         mutate(BTLHr_cor = cor(BT, LH)) %>% 
         mutate(ReMo_cor = cor(movement_activity,repo_activity))
     
-      # create output before aggregation
-      # this is disabled to save space
-      if(return_f2){
-        intermediate_output <- filtered_step2 %>% 
-          select(BT, LH, movement_activity, repo_activity, tot_coefvar, pop_dens, r0, generation_time, growth_type, parental_who, who)
-        
-        dir.create(out.path_intermediate, showWarnings = F)
-        readr::write_csv(intermediate_output, path = paste0(out.path_intermediate, "/", basename(X[2])))
-      }
+ 
       
       #######################
       ### 3rd filter step ###
