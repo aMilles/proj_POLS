@@ -68,14 +68,12 @@ process_sim_step2 <-
     # remove individuals which were born before the start.at tick (default = 5,000)
     # remove individuals from the dataset which have immigrated (only 1st generation!)
     filtered_step1 <- animals %>% 
-      mutate(growth_type = metadata$`growth-type`) %>% 
       mutate(sim.id = strsplit(basename(X[2]), "_")[[1]][2]) %>% 
       group_by(who) %>% 
       mutate(death.tick = ifelse(length(ticks > 2), max(ticks), max(animals$ticks))) %>% 
       mutate(birth.tick = min(ticks)) %>% 
       filter(birth.tick > start.at) %>% 
       ungroup() %>% 
-      mutate(max_birthtick = max(birth.tick)) %>%
       mutate(max_deathtick = max(death.tick))
     
     # if any animals remain in the dataset, process data
@@ -176,15 +174,6 @@ process_sim_step2 <-
       # calculate the coefficient of variation
       filtered_step2$tot_coefvar <- coef_var(population_data$ninds)
       
-      # calculate correlation between generation time and traits and between traits and phenotype
-      filtered_step2 <- 
-      filtered_step2 %>% 
-        mutate(BTslope = cor(BT, generation_time))  %>% 
-        mutate(LHslope = cor(LH, generation_time)) %>% 
-        mutate(repoSlope = cor(repo_activity, generation_time)) %>% 
-        mutate(moveSlope = cor(movement_activity, generation_time)) %>% 
-        mutate(BTLHr_cor = cor(BT, LH)) %>% 
-        mutate(ReMo_cor = cor(movement_activity,repo_activity))
     
  
       
@@ -198,7 +187,6 @@ process_sim_step2 <-
       filtered_step3 <-
         filtered_step2 %>%
         group_by(pop_group) %>%
-        mutate(group_size = length(ninds)) %>%
        
         # aggregate metrics for each group
         mutate(pop_dens = mean(pop_dens)) %>%

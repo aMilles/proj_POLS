@@ -26,9 +26,27 @@ stacked.file <-  here(L1,  L2,L3,  "processed", "output_aggregated", "output_sta
 
 
 aggregated.files <- list.files(agg.path, full.names = T)
+stacked_aggregated$ninds.1
+# stack the data into one dataset and remove redundanct columns
+stacked_aggregated <- do.call(rbind, lapply(as.list(aggregated.files), function(x) readr::read_csv(x))) %>%
+  mutate(ninds = ninds.1) %>% 
+  select(-ticks, 
+         -who, 
+         -BT, 
+         -LH, 
+         -age, 
+         -frepro,
+         -parental_who,
+         -n_offspring, 
+         -soma, 
+         -death.tick, 
+         -birth.tick, 
+         -max_deathtick,
+         -death.cause,
+         -movement_activity,
+         -repo_activity
+         -ninds.1)
 
-# stack the data into one dataset
-stacked_aggregated <- do.call(rbind, lapply(as.list(aggregated.files), function(x) readr::read_csv(x)))
 
 if (transform.BT) stacked_aggregated$medianBT <- 2 - stacked_aggregated$medianBT
 
@@ -36,24 +54,8 @@ if (transform.BT) stacked_aggregated$medianBT <- 2 - stacked_aggregated$medianBT
 
 dir.create(dirname(stacked.file))
 
-stacked_aggregated %>% 
-  select(-ticks, 
-         -who, 
-         -BT, 
-         -LH, 
-         -age, 
-         -frepro, 
-         -n_offspring, 
-         -soma, 
-         -death.tick, 
-         -birth.tick, 
-         -max_birthtick,
-         -max_deathtick,
-         -death.cause,
-         -movement_activity,
-         -repo_activity,
-         )
-names(stacked_aggregated)
+# remove redundant data columns
+
 
 data.table::fwrite(stacked_aggregated, file = stacked.file)
 

@@ -6,6 +6,7 @@ globals[
   ;LANDSCAPE PARAMETERS
   ; disturbance-frequency            ; integer, interval between disturbances
   ; disturbance-intensity             ; continuous, maximum proportion of the population removed by a disturbance
+  ; growth-type                       ; string, linear or logistic growth curve of resources
 
   ; PLOTTING
   ; plot-update-frequency            ; integer, interval between updates of plots and landscape

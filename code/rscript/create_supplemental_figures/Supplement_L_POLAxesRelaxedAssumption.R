@@ -28,7 +28,7 @@ stacked_sub <- stacked %>%
 
 # using the subsetted data
 SX06_data <- stacked_sub %>% 
-  filter(growth_type == "linear") %>% 
+  filter(growt.type == "linear") %>% 
   group_by(disturbance.intensity, disturbance.interval, maintenance.cost, resource.growth.rate.linear) %>% 
   filter(sim.id == sim.id[1]) %>% 
   ungroup() %>% 
