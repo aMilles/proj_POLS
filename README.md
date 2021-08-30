@@ -25,7 +25,7 @@ In order to run the the model and the subsequent analyses the following folder s
 
 3. adjust the number of cores (default is 5 cores/workers used)  in [3_process_simulation_data_all_steps_all_experiments.R](code/rscript/3_process_simulation_data_all_steps_all_experiments.R). This script will run scripts in [process_simulation_output](code/rscript/process_simulation_output/)
 
-5. generate the figures with [4_create_all_Figures.R](code/rscript/4_create_all_Figures.R"). This will run all scripts located in [create_supplemental_figures](code/rscript/create_supplemental_figures/) and [create_main_text_figures](code/rscript/create_main_text_figures/) and generate figures in the respective folders in "figs/YYYY-MM-DD/...".
+5. generate the figures with [4_create_all_Figures.R]("code/rscript/4_create_all_Figures.R"). This will run all scripts located in [create_supplemental_figures](code/rscript/create_supplemental_figures/) and [create_main_text_figures](code/rscript/create_main_text_figures/) and generate figures in the respective folders in "figs/YYYY-MM-DD/...".
 
 
 **If you want to run individual experiments:**
