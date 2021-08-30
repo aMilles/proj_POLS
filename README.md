@@ -1,4 +1,4 @@
-# Fluctuations in density-dependent selection drive the evolution of a pace-of-life-syndrome in populations
+# Fluctuations in density-dependent selection drive the evolution of a pace-of-life-syndrome within and between populations
 
 ## Purpose of this project
 The purpose of this project is to explore density-dependent selection of different paces of life (POL) as a possible mechanism that leads to a pace-of-life-syndrome (POLS). For this purpose, we implemented an eco-evolutionary agent-based model with two heritable traits: responsiveness to spatial variation in resource availability and reproductive investment threshold as the value animals retain before investing into reproduction. By this, we test the following predictions in correspondence to the fluctuating density-dependence selection POLS framework (Wright et al., 2019):
