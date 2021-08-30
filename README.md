@@ -1,7 +1,12 @@
 # Fluctuations in density-dependent selection drive the evolution of a pace-of-life-syndrome in populations
 
 ## Purpose of this project
-The purpose of this project is to explore three predictions made by Wright et al. (2019) on density-dependent selection of different paces of life (POL). The addressed predictions state that, (H1) selected behavioural and life history traits covary with the POL along different population densities (intra-population) and degrees of fluctuation in population density (inter-population) forming a POLS due to density-dependent selection, (H2) the degree of variation in behavioural and life history traits covaries with the POL as it is linked to the degree of fluctuations in population density, and (H3) density-dependent selection along the POLS is reflected in a trade-off between  r<sub>0</sub> and &gamma;, i.e.  r<sub>0</sub> and &gamma; covary with the POL.
+The purpose of this project is to explore density-dependent selection of different paces of life (POL) as a possible mechanism that leads to a pace-of-life-syndrome (POLS). For this purpose, we implemented an eco-evolutionary agent-based model with two heritable traits: responsiveness to spatial variation in resource availability and reproductive investment threshold as the value animals retain before investing into reproduction. By this, we test the following predictions in correspondence to the fluctuating density-dependence selection POLS framework (Wright et al., 2019):
+
+\item (H1) optimal levels of responsiveness and reproductive investment threshold covary with the POL along different population densities (intra-population) and degrees of fluctuation in population density (inter-population) forming a POLS due to density-dependent selection
+\item (H2) the degree of variation in responsiveness and reproductive investment threshold traits covaries with the POL as it is linked to the degree of fluctuations in population density
+\item (H3) a trade-off between r<sub>0</sub>  and &gamma; underlies the density-dependent selection of traits associated with the POL, i.e. r<sub>0</sub> and &gamma; covary with the POL.
+
 
 
 ## Content of this repository
