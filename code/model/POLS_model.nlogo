@@ -124,6 +124,7 @@ to setup
     ; if the model is stored in the intended directory and the working directory has not been set, the working directory
     ; will be set to the "proj_POLS" folder
     ; otherwise a simulations folder will be create at the directory of the model
+    random-seed new-seed
     if member? "code" shell:pwd [shell:cd "../../"]
 
     set working-directory shell:pwd
@@ -876,7 +877,7 @@ disturbance-interval
 disturbance-interval
 0
 1000
-100.0
+125.0
 5
 1
 NIL
@@ -914,7 +915,7 @@ INPUTBOX
 295
 341
 output-directory
-/simulations/2021-03-28c/Supplement_LowFreqHighIntensity_incomebreeding/
+/simulations/2021-03-28/Supplement_LowFreqHighIntensity_monomorphic/
 1
 0
 String
@@ -1160,7 +1161,7 @@ SWITCH
 208
 monomorphic
 monomorphic
-1
+0
 1
 -1000
 
@@ -1172,7 +1173,7 @@ CHOOSER
 breeding-type
 breeding-type
 "income-breeding" "capital-breeding"
-0
+1
 
 SWITCH
 18
@@ -1181,7 +1182,7 @@ SWITCH
 428
 restart?
 restart?
-1
+0
 1
 -1000
 
@@ -1542,7 +1543,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.1.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -1633,9 +1634,9 @@ NetLogo 6.2.0
       <value value="&quot;linear&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="disturbance-interval">
-      <value value="100"/>
       <value value="125"/>
       <value value="150"/>
+      <value value="175"/>
       <value value="200"/>
       <value value="300"/>
       <value value="500"/>
@@ -1713,9 +1714,9 @@ NetLogo 6.2.0
       <value value="&quot;linear&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="disturbance-interval">
-      <value value="100"/>
       <value value="125"/>
       <value value="150"/>
+      <value value="175"/>
       <value value="200"/>
       <value value="300"/>
       <value value="500"/>
@@ -1782,20 +1783,20 @@ NetLogo 6.2.0
       <value value="true"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="Supplement_LowFreqHighIntensity_incomebreeding" repetitions="1" runMetricsEveryStep="false">
+  <experiment name="Supplement_LowFreqHighIntensity_incomebreeding" repetitions="5" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <exitCondition>ticks = 100000</exitCondition>
     <enumeratedValueSet variable="output-directory">
-      <value value="&quot;/simulations/2021-03-28c/Supplement_LowFreqHighIntensity_incomebreeding/&quot;"/>
+      <value value="&quot;/simulations/2021-03-28/Supplement_LowFreqHighIntensity_incomebreeding/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="growth-type">
       <value value="&quot;linear&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="disturbance-interval">
-      <value value="100"/>
       <value value="125"/>
       <value value="150"/>
+      <value value="175"/>
       <value value="200"/>
       <value value="300"/>
       <value value="500"/>
@@ -2024,9 +2025,9 @@ NetLogo 6.2.0
       <value value="&quot;linear&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="disturbance-interval">
-      <value value="100"/>
       <value value="125"/>
       <value value="150"/>
+      <value value="175"/>
       <value value="200"/>
       <value value="300"/>
       <value value="500"/>
@@ -2106,9 +2107,9 @@ NetLogo 6.2.0
       <value value="&quot;linear&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="disturbance-interval">
-      <value value="100"/>
       <value value="125"/>
       <value value="150"/>
+      <value value="175"/>
       <value value="200"/>
       <value value="300"/>
       <value value="500"/>
@@ -2266,9 +2267,9 @@ NetLogo 6.2.0
       <value value="&quot;logistic&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="disturbance-interval">
-      <value value="100"/>
       <value value="125"/>
       <value value="150"/>
+      <value value="175"/>
       <value value="200"/>
       <value value="300"/>
       <value value="500"/>
@@ -2346,9 +2347,9 @@ NetLogo 6.2.0
       <value value="&quot;logistic&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="disturbance-interval">
-      <value value="100"/>
       <value value="125"/>
       <value value="150"/>
+      <value value="175"/>
       <value value="200"/>
       <value value="300"/>
       <value value="500"/>

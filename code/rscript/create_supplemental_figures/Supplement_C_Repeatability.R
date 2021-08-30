@@ -62,3 +62,4 @@ facet_data_bound<- do.call(rbind, facet_data)%>%
     facet_wrap(disturbance.intensity ~ disturbance.interval, scales = "fixed"))
 
 ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_C_Repeatability", ".jpeg")), repeatability, width = 10, height = 10, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_C_Repeatability", ".pdf")), repeatability, width = 10, height = 10, units = "cm", dpi = 600)

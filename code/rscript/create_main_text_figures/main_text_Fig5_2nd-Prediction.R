@@ -47,4 +47,5 @@ Fig5_data <-
 
 # save figure 5
 ggsave(here::here("figs", sim.date, "main_text", "Fig5.jpeg"), Fig5, width = 10, height = 11, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "main_text", "Fig5.pdf"), Fig5, width = 10, height = 11, units = "cm")
 

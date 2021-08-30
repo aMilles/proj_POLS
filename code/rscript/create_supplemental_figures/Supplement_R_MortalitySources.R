@@ -12,7 +12,7 @@ if(!"out.path" %in% ls()){
   out.path <- here("simulations", sim.date,"MainText_LowFreqHighIntensity",  "processed", "output_2ndStep_2ndfilter", "output_intermediate_stacked", "stacked_output_2ndStep_2ndfilter.csv")
   out.path2 <- here("simulations", sim.date,"MainText_LowFreqHighIntensity",  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
 }
-names(stacked)
+
 
 # select all individuals from populations with the weakes and stronges density fluctuations
 stacked <- read_csv(out.path2) %>% 
@@ -71,3 +71,4 @@ mortality <-
 
 
 ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_R_MortalitySources", ".jpeg")), mortality, width = 15, height = 18, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_R_MortalitySources", ".pdf")), mortality, width = 15, height = 18, units = "cm", dpi = 600)

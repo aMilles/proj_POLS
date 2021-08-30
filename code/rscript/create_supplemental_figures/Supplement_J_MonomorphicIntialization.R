@@ -32,6 +32,7 @@ ggplot(both_stacked, aes(x = medianLH, y = medianBT, color = monomorphic, fill =
   scale_x_continuous(breaks = c(0.9, 1.2)))
 
 ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_J_MonomorphicInitialization", ".jpeg")), monoVSpolyB, width = 14, height = 14, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_J_MonomorphicInitialization", ".pdf")), monoVSpolyB, width = 14, height = 14, units = "cm", dpi = 600)
 
 
 

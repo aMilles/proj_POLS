@@ -2,7 +2,6 @@ library(tidyverse)
 library(here)
 library(ggthemes)
 library(mgcv)
-library(ggridges)
 library(patchwork)
 
 # read aggregated data
@@ -73,4 +72,5 @@ combined_final <- combined + plot_layout(guides = "collect") + patchwork::plot_a
 
 ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_P_AverageAgeAtReproduction", ".jpeg")), 
        combined_final, width = 14, height = 9, units = "cm", dpi = 600)
-
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_P_AverageAgeAtReproduction", ".pdf")), 
+       combined_final, width = 14, height = 9, units = "cm", dpi = 600)

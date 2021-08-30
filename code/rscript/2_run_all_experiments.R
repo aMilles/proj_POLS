@@ -54,11 +54,15 @@ experiments <- data.frame(exp_name = c(
   3,
   4,
   20
-))
+), stringsAsFactors = F)
 
-experiments$threads <- ifelse(experiments$threads < 5, experiments$threads, 5)
+
+#experiments$threads <- ifelse(experiments$threads < 5, experiments$threads, 5)
 
 # RUN ALL EXPERIMENTS SETUP IN THE BEHAVIOUR SPACE OF NETLOGO HEADLESS
+
+# without experiments that have been processed already
+experiments<- experiments[!file.exists(here("simulations", "2021-03-28", experiments[,1])),]
 
 for(experiment in seq(nrow(experiments))){
   dir.create(paste0(path2sims, "/", experiments$exp_name[experiment]))

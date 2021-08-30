@@ -57,4 +57,4 @@ df_inclination$predicted_inclination <- fit$fitted.values
 
     dir.create(here("figs", sim.date, "supplemental", "S1_D"),  showWarnings = F)
     ggsave(here::here("figs", sim.date, "supplemental", "S1_D", paste0("FigD_", i, ".jpeg")), gg, width = 8, height = 8, units = "cm", dpi = 600)
-  } 
+    ggsave(here::here("figs", sim.date, "supplemental", "S1_D", paste0("FigD_", i, ".pdf")), gg, width = 8, height = 8, units = "cm", dpi = 600)} 

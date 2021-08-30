@@ -28,3 +28,4 @@ ggplot()+
   theme(legend.position = "bottom", text = element_text(size = 9), legend.title = element_text(size = 10), legend.text = element_text(size = 9), plot.background = element_rect(fill = NA, color = NA), panel.grid.major.y = element_blank(), strip.text = element_text(size = 8)))
 
 ggsave(here::here("figs", sim.date, "main_text", "Fig6.jpeg"), Fig6, width = 9, height = 8, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "main_text", "Fig6.pdf"), Fig6, width = 9, height = 8, units = "cm", dpi = 600)

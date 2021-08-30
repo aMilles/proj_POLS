@@ -1,7 +1,6 @@
 library(here)
 library(tidyverse)
 library(ggthemes)
-
 # scenario with low heritability (main  text)
 L3 <- "MainText_LowFreqHighIntensity"
 sim.date <- "2021-03-28"
@@ -28,7 +27,7 @@ out.path <- list.files(here("simulations", sim.date, L3, "processed", "output_2n
 
 out_highh2 <- lapply(as.list(out.path), function(x){
   test <- read_csv(x)
-  
+
   
   merged <- merge(test, test, by.x = "who", by.y = "parental_who")
   
@@ -65,3 +64,4 @@ out <- rbind(do.call(rbind, out_highh2) %>%
 
 
 ggsave(here("figs", sim.date, "Supplemental", "S1_A_Heritability.png"), cors, width = 12, height = 10, units = "cm") 
+ggsave(here("figs", sim.date, "Supplemental", "S1_A_Heritability.pdf"), cors, width = 12, height = 10, units = "cm") 

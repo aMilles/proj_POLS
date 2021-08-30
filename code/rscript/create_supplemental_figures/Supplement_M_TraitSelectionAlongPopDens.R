@@ -29,7 +29,7 @@ stacked_melt <-
   stacked %>% 
   dplyr::select(medianBT, medianLH, median_repo_activity, median_movement_activity, pop_dens, parameter.group) %>% 
   reshape2::melt(id.vars = c("pop_dens", "parameter.group")) %>% 
-  mutate(variable = factor(as.character(variable), levels = rev(unique(variable))[c(4,3,1,2)], labels = c("Movement rate", "Reproductive investment rate", "Reproductive investment threshold", "Responsiveness")[c(4,3,1,2)]))
+  mutate(variable = factor(as.character(variable), levels = rev(unique(variable))[c(4,3,1,2)], labels = c("Movement rate", "Reproductiveinvestment rate", "Reproductive investment threshold", "Responsiveness")[c(4,3,1,2)]))
 
 # set color scale
 colors <- c(RColorBrewer::brewer.pal(n = 3, "Set2"), "gray50")
@@ -49,6 +49,7 @@ ggplot(stacked_melt, aes(x = pop_dens/2500, y = value, color = parameter.group))
 
 
 # save plot
-ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_M_TraitSelectionAlongPopDens_RelaxesAssumption.jpeg")), Fig_SX11, width = 16, height = 12, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_M_TraitSelectionAlongPopDens_RelaxesAssumption.jpeg")), Fig_SX11, width = 16, height = 15, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_M_TraitSelectionAlongPopDens_RelaxesAssumption.pdf")), Fig_SX11, width = 16, height = 15, units = "cm", dpi = 600)
 
 

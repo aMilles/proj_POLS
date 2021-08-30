@@ -14,19 +14,16 @@ if(!"out.path" %in% ls()){
 }
 
 # read simulation data
-stacked<- read_csv(out.path)  %>% 
-  select(-ninds)
-
+stacked<- read_csv(out.path)
 
 #identify which parameters have been varied in the one-at-a-time approach
 stacked$var <- NA
-names(stacked)
 
+the_cols <- c(1, 30:32, 35:40)
 
-names(stacked)[c(51, 55:64)] <- stringi::stri_replace_all_regex(names(stacked[,c(51, 55:64)]), "\\.", "-")
-names(stacked)[51] <- "ninds"
+names(stacked)[the_cols] <- stringi::stri_replace_all_regex(names(stacked[,the_cols]), "\\.", "-")
 # iterate over columns that contain parameters which may have been changed
-for(cols in c(51, 55:64)){
+for(cols in the_cols){
   # identify columns at which the parameter has been varied
   different_par_row <- which(as.character(as.vector(as.matrix(stacked[,cols]))) != names(sort(table(stacked[,cols]), decreasing = T))[1])
   par_name <- names(stacked)[cols]
@@ -38,7 +35,6 @@ for(cols in c(51, 55:64)){
 stacked$var[(is.na(stacked$var))] <- "default"
 
 #label simulations that stopped prematurely
-stacked$stopped <- stacked$max_deathtick < 99000
 
 # # create a subset where fast and slow end of each population is retained
 stacked_sub <- stacked %>% 
@@ -46,9 +42,7 @@ stacked_sub <- stacked %>%
   mutate(pop_group = order(pop_dens)) %>%
   group_by(sim.id) %>% 
   filter(generation_time == max(generation_time) | generation_time == min(generation_time)) %>% 
-  mutate(gt_group = ifelse(generation_time == min(generation_time), "fast end", "slow end")) %>% 
-  mutate(stopped = max(max_deathtick) < 95000 & !(duplicated(max_deathtick)))
-
+  mutate(gt_group = ifelse(generation_time == min(generation_time), "fast end", "slow end"))
 
 stacked_sub$pop_group[is.na(stacked_sub$pop_group)] <- "high"
 
@@ -56,10 +50,11 @@ stacked_sub <-
 stacked_sub %>% 
   mutate(different = ifelse(`maintenance-cost` == 0.08| `resource-growth-rate-linear` == 0.225, T, F))
 
+print(stacked_sub$disturbance.interval)
+
 # generate figure
 (Fig_SX5 <- 
     ggplot(stacked_sub, aes(y = medianBT, x = medianLH))+
-    geom_text(aes(label = ifelse(stopped, paste("stopped"), NA)), color = "gray")+
     geom_point(data = dplyr::select(stacked_sub %>% filter(var == "default" & sim.id == sim.id[1]), -var), color = "gray")+
     geom_line(data = dplyr::select(stacked_sub %>% filter(var == "default") %>% filter(sim.id == sim.id[[1]]), -var), aes(group = tot_coefvar, color = as.factor(disturbance.interval)), color = "gray")+
     geom_line(aes(group = tot_coefvar, color = as.factor(disturbance.interval)),  alpha = 1)+
@@ -77,3 +72,4 @@ stacked_sub %>%
 
 #save figure
 ggsave(here("Figs", sim.date, "supplemental", "S1_K_OneAtATimeSensitivity.jpeg"), Fig_SX5, width = 17, height = 12, units = "cm")
+ggsave(here("Figs", sim.date, "supplemental", "S1_K_OneAtATimeSensitivity.pdf"), Fig_SX5, width = 17, height = 12, units = "cm")

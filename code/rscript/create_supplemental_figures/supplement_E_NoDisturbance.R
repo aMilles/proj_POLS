@@ -111,6 +111,8 @@ SX4 <- gridExtra::grid.arrange(SX4_A, SX4_B, nrow = 2)
 
 # save the plots
 ggsave(here("figs", sim.date, "supplemental", "S1_E_NoDisturbance.png"), plot = SX4, width = 9, height = 11, units = "cm", dpi = 600)
+ggsave(here("figs", sim.date, "supplemental", "S1_E_NoDisturbance.pdf"), plot = SX4, width = 9, height = 11, units = "cm", dpi = 600)
+
 
 #detach raster-package to avoid namespace conflicts
 detach("package:raster", unload=TRUE)

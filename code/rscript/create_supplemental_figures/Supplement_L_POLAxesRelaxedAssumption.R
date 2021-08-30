@@ -28,7 +28,7 @@ stacked_sub <- stacked %>%
 
 # using the subsetted data
 SX06_data <- stacked_sub %>% 
-  filter(growt.type == "linear") %>% 
+  filter(growth.type == "linear") %>% 
   group_by(disturbance.intensity, disturbance.interval, maintenance.cost, resource.growth.rate.linear) %>% 
   filter(sim.id == sim.id[1]) %>% 
   ungroup() %>% 
@@ -38,6 +38,8 @@ SX06_data <- stacked_sub %>%
 
 # if true, one population per disturbance regime and aparameter combination
 all(SX06_data %>%  select(disturbance.intensity, disturbance.interval, maintenance.cost, resource.growth.rate.linear) %>% table == 2)
+
+print(SX06_data$gt_group)
 
 # distribution of life history trait and behavioural trait under different densities and coefficients of variation
 (SX06_A <-
@@ -54,6 +56,7 @@ all(SX06_data %>%  select(disturbance.intensity, disturbance.interval, maintenan
     xlab("Reproductive investment threshold")+
     guides(size = guide_legend(title = "Population\nDensity"), shape = guide_legend(direction = "vertical"))+
     facet_grid(maintenance.cost.text~resource.growth.rate.linear.text))
+
 
 
 # Distribution of movement behaviour and investment to reproduction
@@ -81,4 +84,5 @@ SX06 <-
 
 # save arranged figures
 ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_L_POLAxesRelaxedAssumption", ".jpeg")), SX06, width = 14, height = 20, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_L_POLAxesRelaxedAssumption", ".pdf")), SX06, width = 14, height = 20, units = "cm", dpi = 600)
 

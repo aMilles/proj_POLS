@@ -22,7 +22,11 @@ required.packages <- c(
   "shiny", 
   "GGally",
   "stringi",
-  "ggthemes")
+  "ggthemes",
+  "patchwork", 
+  "mgcv")
+
 
 #INSTALL MISSING PACKAGES
 install.packages(required.packages[!required.packages %in% installed.packages()])
+

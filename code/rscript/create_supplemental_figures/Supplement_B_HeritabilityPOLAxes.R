@@ -45,4 +45,5 @@ theme_clean()+
 
 
 ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_B_PopDensResponsivenessHeritability", ".jpeg")), Highh2, width = 12, height = 10, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_B_PopDensResponsivenessHeritability", ".pdf")), Highh2, width = 12, height = 10, units = "cm", dpi = 600)
 

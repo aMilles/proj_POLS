@@ -25,12 +25,13 @@ agg.path <- here(L1,  L2,L3,  "processed", "output_aggregated")
 stacked.file <-  here(L1,  L2,L3,  "processed", "output_aggregated", "output_stacked", "stacked_aggregated_output.csv")
 
 
-aggregated.files <- list.files(agg.path, full.names = T)
-stacked_aggregated$ninds.1
+aggregated.files <- list.files(agg.path, full.names = T, pattern = "processed_")
+test <- read_csv(aggregated.files[1])
+names(test)
 # stack the data into one dataset and remove redundanct columns
 stacked_aggregated <- do.call(rbind, lapply(as.list(aggregated.files), function(x) readr::read_csv(x))) %>%
   mutate(ninds = ninds.1) %>% 
-  select(-ticks, 
+  dplyr::select(-ticks, 
          -who, 
          -BT, 
          -LH, 
@@ -44,7 +45,7 @@ stacked_aggregated <- do.call(rbind, lapply(as.list(aggregated.files), function(
          -max_deathtick,
          -death.cause,
          -movement_activity,
-         -repo_activity
+         -repo_activity,
          -ninds.1)
 
 
@@ -71,7 +72,7 @@ if(file.exists(intermediate.path)){
   stacked.file <-  here(L1,  L2,L3,  "processed", "output_2ndStep_2ndfilter", "output_intermediate_stacked", "stacked_output_2ndStep_2ndfilter.csv")
   
   
-  intermediate.files <- list.files(intermediate.path, full.names = T)
+  intermediate.files <- list.files(intermediate.path, full.names = T, pattern = "processed")
   
   # stack the data into one dataset
   stacked_intermediate <- do.call(rbind, lapply(as.list(intermediate.files), function(x) readr::read_csv(x)))

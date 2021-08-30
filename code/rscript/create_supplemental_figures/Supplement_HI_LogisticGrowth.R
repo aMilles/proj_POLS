@@ -125,6 +125,7 @@ plot.loggrowth <- function(df, name, sim.date){
   
   # save figure 4
   ggsave(here::here("figs", sim.date, "supplemental", paste0(name, ".jpeg")), Loggrowth, width = 16, height = 10, units = "cm", dpi = 600)
+  ggsave(here::here("figs", sim.date, "supplemental", paste0(name, ".pdf")), Loggrowth, width = 16, height = 10, units = "cm", dpi = 600)
 }
 
 plot.loggrowth(

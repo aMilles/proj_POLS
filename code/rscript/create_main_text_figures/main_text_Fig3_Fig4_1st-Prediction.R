@@ -23,10 +23,10 @@ source(here("code", "rscript", "create_main_text_figures", "main_text_Fig4_1stPr
 
 # Stylizied intitial distribution of traits
 
-Fig3A_data <- data.frame(x = runif(400, max = 2), y = runif(400, max = 2))
+Fig3A_data <- data.frame(x = runif(250, max = 2), y = runif(250, max = 2))
 
 (Fig3A <- ggplot()+  
-    geom_point(data = Fig3A_data, aes(x = x, y = y), shape = 21, size = .5)+
+    geom_point(data = Fig3A_data, aes(x = x, y = y), shape = 21, size = 1)+
     ylab("Responsiveness")+
     xlab("Reproductive investment threshold")+
     geom_rect(data = stacked, aes(ymax = min(medianBT), ymin = max(medianBT), xmin = min(medianLH), xmax = max(medianLH)), fill = NA, color = "gray50", size = 2)+
@@ -55,6 +55,7 @@ Fig3 <-
 
 # save figure 3
 ggsave(here::here("figs", sim.date, "main_text", paste0("Fig3", ".jpeg")), Fig3, width = 8, height = 14.5, units = "cm", dpi = 600)
+ggsave(here("figs", sim.date, "main_text", "Fig3.pdf"), Fig3, width = 8, height = 14.5, units = "cm")
 
 
 ####################
@@ -134,4 +135,5 @@ Fig4 <-
 
 # save figure 4
 ggsave(here::here("figs", sim.date, "main_text", paste0("Fig4", ".jpeg")), Fig4, width = 16, height = 10, units = "cm", dpi = 600)
+ggsave(here("figs", sim.date, "main_text", "Fig4.pdf"), Fig4, width = 16, height = 10, units = "cm")
 

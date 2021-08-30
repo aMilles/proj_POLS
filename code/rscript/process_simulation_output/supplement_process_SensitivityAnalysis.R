@@ -46,7 +46,7 @@ for(step in seq(1, ncol(param_mat), by = 2)){
 
 # repliacte the matrix so two different disturbance-frequency levels are added
 log_oat <- do.call("rbind", replicate(setNames(data.frame(t(param_mat)), log_growth$param), n = 2, simplify = F))
-log_oat$`disturbance-interval` <- rep(c(100, 500), each = 20)
+log_oat$`disturbance-interval` <- rep(c(150, 500), each = 20)
 
 #log_oat <- log_oat[!duplicated(log_oat),]
 # convert the parameter sets to a nlrx-readable format
@@ -114,6 +114,6 @@ nl@experiment <- experiment(expname = "Supplement_SensitivityAnalysis",
 nl@simdesign <- simdesign_distinct(nl = nl, nseeds = 1)
 
 # run sensitivity analysis in parallel
-plan(multisession, gc = T, workers = 4)
-results <- nlrx::run_nl_all(nl, split = 4)
+plan(multisession, gc = T, workers = 8)
+results <- nlrx::run_nl_all(nl, split = 8)
 

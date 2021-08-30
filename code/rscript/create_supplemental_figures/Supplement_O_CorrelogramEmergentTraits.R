@@ -17,9 +17,9 @@ if(!"out.path" %in% ls()){
 # create dataset for correlogram
 
 SX12_data <- read_csv(out.path) %>% 
-  dplyr::select("medianBT", "medianLH", "longevity", "em_rate", "generation_time", "movement_activity", "repo_activity", "n_offspring", "r_buffer", "soma") %>% 
-  mutate(fe = (r_buffer + n_offspring * 50 + soma) / longevity) %>% 
-  dplyr::select("medianBT", "medianLH", "longevity", "em_rate", "generation_time", "movement_activity", "repo_activity", "fe")
+  dplyr::select("medianBT", "medianLH", "longevity", "em_rate", "generation_time", "median_movement_activity", "median_repo_activity", "r0", "r_buffer", "reproduction.threshold") %>% 
+  mutate(fe = (r_buffer + r0 * longevity * reproduction.threshold)) %>% 
+  dplyr::select("medianBT", "medianLH", "longevity", "em_rate", "generation_time", "median_movement_activity", "median_repo_activity", "fe")
 
 
 SX12_data <- setNames(SX12_data, c("BT", "LH", "life span", "EM rate", "GT", "MA", "RI", "FE"))
@@ -85,3 +85,4 @@ GGscatterPlot <- function(data, mapping, ...,
   
 
 ggsave(here("figs", sim.date, "supplemental", "S1_O_Correlogram.jpeg"), FigSX12, width = 16, height = 10, dpi = 600, units = "cm")
+ggsave(here("figs", sim.date, "supplemental", "S1_O_Correlogram.pdf"), FigSX12, width = 16, height = 10, dpi = 600, units = "cm")

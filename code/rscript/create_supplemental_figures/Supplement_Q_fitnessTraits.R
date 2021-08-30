@@ -32,8 +32,8 @@ preds <- lapply(split(sims_subset, cut(sims_subset$pop_dens, 4)), function(x){
   
   pred.df <- 
     pred.df %>% 
-    mutate(pLH = predict.gam(fit_LH, newdata = pred_df, type = "response")) %>% 
-    mutate(pBT = predict.gam(fit_BT, newdata = pred_df, type = "response")) %>%
+    mutate(pLH = predict.gam(fit_LH, newdata = pred.df, type = "response")) %>% 
+    mutate(pBT = predict.gam(fit_BT, newdata = pred.df, type = "response")) %>%
     mutate(pBTrel = pBT / max(pBT)) %>% 
     mutate(pLHrel = pLH / max(pLH)) 
   return(pred.df)
@@ -84,7 +84,7 @@ combined <- FitnessLH + FitnessBT & theme(legend.position = "bottom")
 combined_final <- combined + plot_layout(guides = "collect")
 
 
-
 ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_Q_traitPopDensityReproduction", ".jpeg")), 
        combined_final, width = 16, height = 9, units = "cm", dpi = 600)
-
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_Q_traitPopDensityReproduction", ".pdf")), 
+       combined_final, width = 16, height = 9, units = "cm", dpi = 600)

@@ -44,7 +44,7 @@ unique(ls$var)
     scale_y_continuous(breaks = c(.15, .5, 1))+
     theme_clean()+
     scale_y_log10()+
-    xlab("Population density [indiviudals/patch]")+
+    xlab("Population density [individuals/patch]")+
     ylab("Mean harvest\nrate [resources/t]")+
     theme(legend.position = "bottom", legend.direction = "vertical", legend.title = element_text(size = 10), legend.text = element_text(size = 9), panel.grid.major.y = element_blank())+
     facet_wrap(~`disturbance-interval`))
@@ -69,3 +69,4 @@ gridExtra::grid.arrange(Fig_SX10b+theme(legend.position = "none", panel.border =
          
 # save figure
 ggsave(here("Figs", sim.date, "Supplemental", "S1_N_LandscapeDynamics_RelaxedAssumption.jpeg"), Fig_SX10, width = 14, height = 17, units = "cm", dpi = 600)
+ggsave(here("Figs", sim.date, "Supplemental", "S1_N_LandscapeDynamics_RelaxedAssumption.pdf"), Fig_SX10, width = 14, height = 17, units = "cm", dpi = 600)

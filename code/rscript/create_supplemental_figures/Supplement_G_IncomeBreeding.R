@@ -97,4 +97,5 @@ IncomeBreeding <-
 
 # save figure 4
 ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_G_IncomeBreeding", ".jpeg")), IncomeBreeding, width = 16, height = 10, units = "cm", dpi = 600)
+ggsave(here::here("figs", sim.date, "supplemental", paste0("S1_G_IncomeBreeding", ".pdf")), IncomeBreeding, width = 16, height = 10, units = "cm", dpi = 600)
 

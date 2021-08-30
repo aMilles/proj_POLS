@@ -34,7 +34,8 @@ main.text.figure.scripts <- list.files(here("code", "rscript", "create_main_text
 # creation of PanelD in Fig 4 is in separate script that is sources by other scripts (so not needed to be sourced separately)
 main.text.figure.scripts <- main.text.figure.scripts[-which(stringi::stri_count_regex(main.text.figure.scripts, "main_text_Fig4_1stPrediction_PanelD.R") == 1)]
 
-for(script in main.text.figure.scripts[-1]){
+for(script in main.text.figure.scripts){
+  rm(list = ls()[!ls() %in% c("sim.date", "main.text.figure.scripts", "script")])
   source(script)
   rm(list = ls()[!ls() %in% c("sim.date", "main.text.figure.scripts")])
 }

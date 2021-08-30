@@ -27,7 +27,7 @@ landscape <- do.call(rbind, landscape)
 # convert population size to population density (62500 patches)
 landscape[,5] <- landscape[,5] / 2500
 names(landscape) <- c("ticks", "x", "y", "hr", "Population density", "ID")
-
+max(landscape$ticks)
 # calculate harvest rate and CI for each landscape 
 landscape_proc <- landscape %>%
   group_by(ticks, ID) %>% 
@@ -47,7 +47,7 @@ landscape_proc <- data.frame(landscape_proc)
 Fig2A_data <- landscape_proc %>% 
   filter(ID == ID[length(ID)]) %>% 
   filter(ticks > 5000)
-
+Fig2A_data$ticks
 # LANDSCAPE ELEMENT
 # Select landscape with minimum and maxium median harvest rate
 
@@ -82,7 +82,6 @@ gg_min_hr <-
       theme(legend.position = "none", panel.background = element_rect(fill = "white", color = "black"))+
       coord_fixed()
   )
-
 
 # data.frame for harvest rate plot
 landscape_proc <- landscape_proc[, -match(c("x", "y", "hr"), names(landscape_proc))]
@@ -169,4 +168,4 @@ ys <- c(min(Fig2A_data$Population.density), reldist::wtd.quantile(Fig2A_data$`Po
 Fig2 <- gridExtra::grid.arrange(ggdraw(Fig2A)+draw_plot_label("A"), ggdraw(Fig2B)+draw_plot_label("B"), ncol = 1)
 
 ggsave(here("figs", sim.date, "main_text", "Fig2.jpeg"), Fig2, width = 10, height = 14, units = "cm")
-
+ggsave(here("figs", sim.date, "main_text", "Fig2.pdf"), Fig2, width = 10, height = 14, units = "cm")

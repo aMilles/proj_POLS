@@ -10,7 +10,6 @@ n_cores <- 3 #NUMBER OF CORES TO USE FOR PARALLEL PROCESSING OF SIMULATION DATA
 return_f2_ <- T #RETURN INTERMEDIATE PRODUCT FOR FURTHER ANALYSES (SET FALSE TO SAVE STORAGE)
 start.at_ <- 10000 #INITIAL TIME STEPS TO DISMISS 
 
-
 # select experiments which haven't been processed yet
 experiments_to_process <- vector()
 for(L3 in experiments) {
