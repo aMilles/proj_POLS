@@ -21,7 +21,7 @@ In order to run the the model and the subsequent analyses the following folder s
 
 
 ## How to generate results
-**To replicate all results (including the supplement) published in JOURNAL XY follow these steps:**
+**To replicate all results (including the supplement) accepted by "The American Naturalist" (MS ID: 606579 follow these steps:**
 
 0. go to [code/rscript](code/rscript) 
 1. check for missing packages and install them by running [1_install_missing_packages.R](code/rscript/1_install_missing_packages.R). This script compares packages needed in this project with packages existing in your library. It does not, however, not compare their versions. In case, any errors occur, make sure you use R 3.6.0 and the lastest releases (2021-04-20).
